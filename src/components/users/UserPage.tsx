@@ -1,24 +1,21 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../redux/actions/users/user.actions';
 import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import UserTableList from './UserTableList';
 
 
-const Users = () => {
+const UserPage = () => {
 
     const user = useSelector((state: RootStore) => state.user.users)
     const loading = useSelector((state: RootStore) => state.common.loading);
     const dispatch = useDispatch()
-    const [users, setUsers] = useState<any | null>(null);
 
     useEffect(() => {
-        dispatch(getUsers())
+        // dispatch(getUsers())
     }, [])
 
     useEffect(() => {
         if(user != undefined){
-            setUsers(user.data);
+            // setUsers(user.data);
         }
     },[user])
 
@@ -30,7 +27,7 @@ const Users = () => {
                     <nav>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><a href="/">Users</a></li>
-                            {/* <li className="breadcrumb-item active">Dashboard</li> */}
+                            <li className="breadcrumb-item active">User Page</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,7 +36,7 @@ const Users = () => {
                         <div className="col-lg-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <UserTableList users={users} dispatch={dispatch} loading={loading}/>
+
                                 </div>
                             </div>
                         </div>
@@ -51,4 +48,4 @@ const Users = () => {
 
 }
 
-export default Users;
+export default UserPage;

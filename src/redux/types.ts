@@ -1,4 +1,17 @@
-export const SET_LOADING = 'SET_LOADING'
+/** COMMON TYPES */
+
+export enum CommonTypes {
+    SET_LOADING = 'SET_LOADING'
+}
+
+export interface SetLoading {
+    type: CommonTypes.SET_LOADING;
+    payload: boolean;
+}
+
+export type CommonDispatchTypes = SetLoading;
+
+/** END COMMON TYPES */
 
 
 /** USER TYPES */
@@ -21,7 +34,3 @@ export interface GetUserError {
 export type UserDispatchTypes = GetUserSuccess | GetUserError;
 
 /** USER END TYPES */
-
-export interface Users{
-    users: [];
-}

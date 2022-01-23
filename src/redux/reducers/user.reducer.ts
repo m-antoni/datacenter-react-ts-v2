@@ -1,15 +1,11 @@
 import { UserTypes, UserDispatchTypes } from "../types";
 
-
 interface InitialStateI {
-    loading: boolean
     users?: any
     user?: any
 }
 
-const initialState: InitialStateI = {
-    loading: false
-};
+const initialState: InitialStateI = {};
 
 const userReducer = (state: any = initialState , action: UserDispatchTypes) : InitialStateI => {
 
@@ -17,7 +13,6 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
     {
         case UserTypes.GET_USER_SUCCESS:
             return {
-                loading: false,
                 users: action.payload
             }
         default:

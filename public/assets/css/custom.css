@@ -3,6 +3,11 @@
     max-width: 100px;
 }
 
+.user-list-tr:hover {
+    cursor: pointer;
+    background: #f6f9ff !important;
+}
+
 
 @media (min-width: 1200px){
     .logo {
