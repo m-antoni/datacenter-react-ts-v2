@@ -1,0 +1,12 @@
+
+.user-pagelimit-select{
+    max-width: 100px;
+}
+
+
+@media (min-width: 1200px){
+    .logo {
+        width: unset !important;
+        /* width: 280px; */
+    }
+}
