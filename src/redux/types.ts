@@ -1,5 +1,4 @@
 /** COMMON TYPES */
-
 export enum CommonTypes {
     SET_LOADING = 'SET_LOADING'
 }
@@ -10,27 +9,26 @@ export interface SetLoading {
 }
 
 export type CommonDispatchTypes = SetLoading;
-
 /** END COMMON TYPES */
 
 
 /** USER TYPES */
 export enum UserTypes {
-    GET_USER_SUCCESS = 'GET_USER_SUCCESS',
+    GET_USERS_SUCCESS = 'GET_USERS_SUCCESS',
     GET_USER_ERROR = 'GET_USER_ERROR',
-    GET_SINGLE_USER_SUCCESS = 'GET_SINGLE_USER_SUCCESS',
-    GET_SINGLE_USER_ERROR = 'GET_SINGLE_USER_ERROR',
+    GET_USER_LINKEDIN_SUCCESS = 'GET_USER_LINKEDIN_SUCCESS',
+    GET_USER_LINKEDIN_ERROR = 'GET_USER_LINKEDIN_ERROR',
 }
 
-export interface GetUserSuccess {
-    type: UserTypes.GET_USER_SUCCESS;
+export interface GetUsersSuccess {
+    type: UserTypes.GET_USERS_SUCCESS;
     payload: any
 }
 
-export interface GetUserError {
-    type: UserTypes.GET_SINGLE_USER_ERROR;
+export interface GetUserByLinkedInUrl {
+    type: UserTypes.GET_USER_LINKEDIN_SUCCESS;
+    payload: any
 }
 
-export type UserDispatchTypes = GetUserSuccess | GetUserError;
-
+export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl;
 /** USER END TYPES */

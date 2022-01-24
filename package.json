@@ -24,6 +24,8 @@
     "@types/react-select": "^5.0.1",
     "@types/redux": "^3.6.0",
     "axios": "^0.25.0",
+    "izitoast": "^1.4.0",
+    "jquery": "^3.6.0",
     "mui-datatables": "^4.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.1",

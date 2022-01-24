@@ -28,7 +28,7 @@ const tableConfigValues: TableConfigI = {
     sort: 'desc'
 }
 
-const UserTableList = ({ users, dispatch, loading }: any) => {
+const UserTableList = ({ users, dispatch, loading, handleChangePage }: any) => {
 
     const [pageLimit, setPageLimit] = useState<PageLimitOptionI>(pageLimitOptions[0]);
     const [tableConfig, setTableComfig] = useState(tableConfigValues)
@@ -46,19 +46,19 @@ const UserTableList = ({ users, dispatch, loading }: any) => {
     };
 
 
-    const onClickTableRow = (_id: string) => {
-        console.log(_id)
-    }
-
-
     return (
         <>
-            <Select
+           <Select
                 value={pageLimit}
                 onChange={pageLimitOnChange}
                 options={pageLimitOptions}
                 className="user-pagelimit-select mt-4"
             />
+
+                    <div className="input-group mb-3">
+                      <span className="input-group-text" id="basic-addon3">https://</span>
+                      <input type="text" placeholder="Search LinkedIn URL" className="form-control" id="basic-url" aria-describedby="basic-addon3"/>
+                    </div>
             {
                 loading ? <Spinner/> : 
                 <table className="table mb-4">
@@ -76,7 +76,7 @@ const UserTableList = ({ users, dispatch, loading }: any) => {
                             users != null && 
                             users.docs.map((user: any, index: number) => {
                                 return (
-                                    <tr onClick={() => onClickTableRow(user._id)} key={index} className="user-list-tr">
+                                    <tr onClick={() => handleChangePage(user.linkedin_url)} key={index} className="user-list-tr">
                                         <td>{user.full_name}</td>
                                         <td>{user.job_title}</td>
                                         <td>{user.job_company_name}</td>
