@@ -1,11 +1,11 @@
 import { CommonTypes, CommonDispatchTypes } from "../types";
 
 interface InitialStateI {
-   loading: boolean | null; 
+   loading: boolean | null;
 }
 
 const initialState: InitialStateI = {
-    loading: false 
+    loading: false,
 };
 
 const commonReducer = (state: any = initialState , action: CommonDispatchTypes) : InitialStateI => {
@@ -19,7 +19,6 @@ const commonReducer = (state: any = initialState , action: CommonDispatchTypes) 
         default:
             return state;
     }
-    return state;
 }
 
 

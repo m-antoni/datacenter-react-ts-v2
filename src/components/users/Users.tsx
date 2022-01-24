@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../redux/actions/users/user.actions';
+import { getUserByLinkedInUrl, getUsers } from '../../redux/actions/users/user.actions';
 import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import UserTableList from './UserTableList';
@@ -14,6 +14,7 @@ const Users = () => {
     const navigate = useNavigate();
 
     const [users, setUsers] = useState<any | null>(null);
+    const [linkedInUrl, setLinkedInUrl] = useState<string>('');
 
     useEffect(() => {
         dispatch(getUsers())
@@ -25,8 +26,22 @@ const Users = () => {
         }
     },[user])
 
+    // handle change page row click
     const handleChangePage = (linkedin_url: string) => {
         navigate('/users/page', { state: linkedin_url });
+    }
+
+    // submit search url
+    const submitSearchLinkedInUrl = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // console.log(linkedInUrl)
+        handleChangePage(linkedInUrl);
+    }
+
+    // onchange handler search url
+    const onChangeSearchLinkedInUrl = (e: React.FormEvent<HTMLInputElement>) => {
+        // console.log(e.currentTarget.value)
+        setLinkedInUrl(e.currentTarget.value);
     }
 
     return (    
@@ -50,6 +65,9 @@ const Users = () => {
                                         dispatch={dispatch} 
                                         loading={loading}
                                         handleChangePage={handleChangePage}
+                                        submitSearchLinkedInUrl={submitSearchLinkedInUrl}
+                                        onChangeSearchLinkedInUrl={onChangeSearchLinkedInUrl}
+                                        linkedInUrl={linkedInUrl}
                                     />
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { getUsers } from '../../redux/actions/users/user.actions';
 import Select from 'react-select';
 import ReactPaginate from 'react-paginate';
 import { Spinner } from '../_layouts/Spinner';
+import { capitalizeStr } from '../../utils/Common';
 
 
 interface PageLimitOptionI {
@@ -28,7 +29,7 @@ const tableConfigValues: TableConfigI = {
     sort: 'desc'
 }
 
-const UserTableList = ({ users, dispatch, loading, handleChangePage }: any) => {
+const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearchLinkedInUrl, onChangeSearchLinkedInUrl }: any) => {
 
     const [pageLimit, setPageLimit] = useState<PageLimitOptionI>(pageLimitOptions[0]);
     const [tableConfig, setTableComfig] = useState(tableConfigValues)
@@ -45,20 +46,22 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage }: any) => {
         // setTableComfig({ ...tableConfig, page: page });
     };
 
-
     return (
         <>
-           <Select
-                value={pageLimit}
-                onChange={pageLimitOnChange}
-                options={pageLimitOptions}
-                className="user-pagelimit-select mt-4"
-            />
-
-                    <div className="input-group mb-3">
-                      <span className="input-group-text" id="basic-addon3">https://</span>
-                      <input type="text" placeholder="Search LinkedIn URL" className="form-control" id="basic-url" aria-describedby="basic-addon3"/>
-                    </div>
+            <div className='d-flex justify-content-between'>
+                <Select
+                    value={pageLimit}
+                    onChange={pageLimitOnChange}
+                    options={pageLimitOptions}
+                    className="user-pagelimit-select mt-4"
+                />
+                
+                <form onSubmit={submitSearchLinkedInUrl} className="input-group mb-3 linkedin-search mt-4">
+                    <span className="input-group-text" id="basic-addon3">https://</span>
+                    <input type="text" onChange={onChangeSearchLinkedInUrl} placeholder="Search LinkedIn URL" className="form-control" required/>
+                </form>
+            </div>
+                  
             {
                 loading ? <Spinner/> : 
                 <table className="table mb-4">
@@ -77,10 +80,10 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage }: any) => {
                             users.docs.map((user: any, index: number) => {
                                 return (
                                     <tr onClick={() => handleChangePage(user.linkedin_url)} key={index} className="user-list-tr">
-                                        <td>{user.full_name}</td>
-                                        <td>{user.job_title}</td>
-                                        <td>{user.job_company_name}</td>
-                                        <td>{user.industry}</td>
+                                        <td>{capitalizeStr('v',user.full_name)}</td>
+                                        <td>{user.job_title ? capitalizeStr('v', user.job_title) : 'N/A'}</td>
+                                        <td>{user.job_company_name ? capitalizeStr('v', user.job_company_name) : 'N/A'}</td>
+                                        <td>{user.industry ? capitalizeStr('v', user.industry) : 'N/A'}</td>
                                         <td>{user.linkedin_url}</td>
                                     </tr> 
                                 )

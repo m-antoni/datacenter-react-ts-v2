@@ -15,7 +15,6 @@ export type CommonDispatchTypes = SetLoading;
 /** USER TYPES */
 export enum UserTypes {
     GET_USERS_SUCCESS = 'GET_USERS_SUCCESS',
-    GET_USER_ERROR = 'GET_USER_ERROR',
     GET_USER_LINKEDIN_SUCCESS = 'GET_USER_LINKEDIN_SUCCESS',
     GET_USER_LINKEDIN_ERROR = 'GET_USER_LINKEDIN_ERROR',
 }
@@ -30,5 +29,9 @@ export interface GetUserByLinkedInUrl {
     payload: any
 }
 
-export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl;
+export interface GetUserByLinkedInUrlError {
+    type: UserTypes.GET_USER_LINKEDIN_ERROR
+}
+
+export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError;
 /** USER END TYPES */

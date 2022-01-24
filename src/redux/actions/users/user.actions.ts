@@ -1,8 +1,9 @@
 import { Dispatch } from "redux"
 import { UserTypes, UserDispatchTypes, CommonDispatchTypes, CommonTypes } from "../../types";
-import { setLoading } from "../common/common.action";
+import { setAlertMessage, setLoading } from "../common/common.action";
 import { UserService } from "./user.service";
 import { useSelector, useDispatch } from 'react-redux';
+import { ToastDanger } from "../../service/toast.service";
 
 /** Get All Users */
 export const getUsers = (page = 1, limit = 10, sort = "desc") => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
@@ -31,12 +32,19 @@ export const getUserByLinkedInUrl = (linkedin_url: string) => async (dispatch: D
         
         const result = await UserService.getUserByLinkedInUrl(linkedin_url);
 
-        dispatch({ type: UserTypes.GET_USER_LINKEDIN_SUCCESS, payload: result.data });
-
-        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
-
+        if(result.data.data.length === 0){
+            /* Still SUCCESS if no data just send an empty data array with message, updated requested by Teff **/
+            dispatch({ type: UserTypes.GET_USER_LINKEDIN_ERROR });
+            dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+            ToastDanger('LinkedIn user not found!')
+        }else {
+            dispatch({ type: UserTypes.GET_USER_LINKEDIN_SUCCESS, payload: result.data });
+            dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+        }
+        
     } catch (error) {
         console.log(error)
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+        dispatch({ type: UserTypes.GET_USER_LINKEDIN_ERROR });
     }
 }

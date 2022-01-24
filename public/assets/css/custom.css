@@ -1,6 +1,11 @@
 
 .user-pagelimit-select{
     max-width: 100px;
+    min-width: 80px;
+}
+
+.linkedin-search{
+    max-width: 400px;
 }
 
 .user-list-tr:hover {
