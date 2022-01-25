@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
+import { deleteUserByLinkedInUrl, getUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from '../_layouts/Spinner';
 import { capitalizeStr } from '../../utils/Common';
+import { ToastQuestion, ToastSuccess, ToastWarning } from '../../redux/service/toast.service';
 
 const UserPage = () => {
 
     const linkedin_user = useSelector((state: RootStore) => state.user.linkedin_url)
+    const isDeleted = useSelector((state: RootStore) => state.user.delete);
     const error = useSelector((state: RootStore) => state.user.error)
     const loading = useSelector((state: RootStore) => state.common.loading);
     const dispatch = useDispatch()
@@ -31,6 +33,23 @@ const UserPage = () => {
         linkedin_user != undefined && setUser(linkedin_user.data.docs);
     },[linkedin_user])
 
+    useEffect(() => {
+       if(isDeleted === true){
+            navigate('/users');
+            ToastSuccess('User has been deleted successfully.');
+       }
+    },[isDeleted]);
+
+    // delete button
+    const deleteButton = (linkedin_url: string) => {
+        ToastQuestion('Are you sure you want to delete this user?', () => deleteUserByLinkedInUrlHandler(linkedin_url) )
+    }
+    
+    const deleteUserByLinkedInUrlHandler = (linkedin_url: string) => {
+        dispatch(deleteUserByLinkedInUrl(linkedin_url))
+        
+    }
+
     // console.log(user)
     const renderUserData = (type: string, userData: object) => {
         console.log(userData);
@@ -40,12 +59,19 @@ const UserPage = () => {
                     Object.entries(userData).map(([key, val]) => {
                         if(type === "general")
                         {
-                            if(key === 'full_name' || key === 'job_title' || key === 'job_company_name' || key === 'linkedin_url' || key === 'gender' || key === 'first_name' || key === 'last_name' || key === 'linkedin_id')
+                            if(key === 'full_name' || key === 'job_title' || key === 'job_company_name' || key === 'gender' || key === 'first_name' || key === 'last_name' || key === 'linkedin_id')
                             {
                                 return (
                                     <div className="pb-1"><span className="text-secondary">{capitalizeStr('k', key)}</span>: {capitalizeStr('k', val)}</div>
                                 )
                             }
+                        }
+
+                        if(key === 'linkedin_url')
+                        {
+                            return (
+                                <div className="pb-1"><span className="text-secondary">{capitalizeStr('k', key)}</span>: {val}</div>
+                            )
                         }
 
                         if(type === "location")
@@ -191,7 +217,7 @@ const UserPage = () => {
     return (    
         <>
             <main id="main" className="main">
-                <div className="pagetitle">
+                <div className="d-flex justify-content-between pagetitle">
                     {/* <h1>Users</h1> */}
                     <nav>
                         <ol className="breadcrumb">
@@ -199,6 +225,11 @@ const UserPage = () => {
                             <li className="breadcrumb-item active">User Page</li>
                         </ol>
                     </nav>
+                    <div>
+                        <ol className="breadcrumb">
+                           <button onClick={() => deleteButton(user[0]['linkedin_url'])} className="btn btn-danger btn-sm"><i className="bi bi-trash"></i> </button>
+                        </ol>
+                    </div>
                 </div>
                 <section className="section dashboard">
                     {

@@ -17,6 +17,7 @@ export enum UserTypes {
     GET_USERS_SUCCESS = 'GET_USERS_SUCCESS',
     GET_USER_LINKEDIN_SUCCESS = 'GET_USER_LINKEDIN_SUCCESS',
     GET_USER_LINKEDIN_ERROR = 'GET_USER_LINKEDIN_ERROR',
+    DELETE_LINKEDIN_USER_SUCCESS = 'DELETE_LINKEDIN_USER_SUCCESS',
 }
 
 export interface GetUsersSuccess {
@@ -33,5 +34,9 @@ export interface GetUserByLinkedInUrlError {
     type: UserTypes.GET_USER_LINKEDIN_ERROR
 }
 
-export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError;
+export interface DeleteLinkedInUser {
+    type: UserTypes.DELETE_LINKEDIN_USER_SUCCESS
+}
+
+export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | DeleteLinkedInUser;
 /** USER END TYPES */

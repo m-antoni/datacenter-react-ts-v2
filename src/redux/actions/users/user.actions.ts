@@ -48,3 +48,20 @@ export const getUserByLinkedInUrl = (linkedin_url: string) => async (dispatch: D
         dispatch({ type: UserTypes.GET_USER_LINKEDIN_ERROR });
     }
 }
+
+
+
+/** User Delete */
+export const deleteUserByLinkedInUrl = (linkedin_url: string) => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+    try {
+        
+        const result = await UserService.deleteUserByLinkedInUrl({ linkedin_url: linkedin_url });
+        
+        dispatch({ type: UserTypes.DELETE_LINKEDIN_USER_SUCCESS })
+
+        console.log(result);
+
+    } catch (err) {
+        console.log(err);
+    }
+}

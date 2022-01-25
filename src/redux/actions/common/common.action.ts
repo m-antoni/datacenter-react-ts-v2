@@ -1,5 +1,5 @@
 import { Dispatch } from "redux"
-import { ToastDanger, ToastSuccess, ToastWarning } from "../../service/toast.service";
+import { ToastDanger, ToastQuestion, ToastSuccess, ToastWarning } from "../../service/toast.service";
 import { CommonDispatchTypes, CommonTypes } from "../../types";
 
 // SET LOADING
@@ -11,7 +11,8 @@ export const setLoading = (value: boolean) => async (dispatch: Dispatch<CommonDi
 export enum AlertTypes {
     SUCCESS = 'SUCCESS',
     WARNING = 'WARNING',
-    DANGER = 'DANGER'
+    DANGER = 'DANGER',
+    QUESTION = 'QUESTION'
 }
 
 export const setAlertMessage = (type: string, message: string): void => {
@@ -25,7 +26,10 @@ export const setAlertMessage = (type: string, message: string): void => {
         case AlertTypes.DANGER:
             ToastDanger(message);
             break;
+        case AlertTypes.QUESTION:
+            // ToastQuestion(message);
+            break;
        default:
            break;
-   }
+  }
 }

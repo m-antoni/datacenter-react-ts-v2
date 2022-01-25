@@ -4,6 +4,7 @@ interface InitialStateI {
     users?: any
     linkedin_url?: any
     error?: boolean
+    delete?: boolean
 }
 
 const initialState: InitialStateI = {};
@@ -19,6 +20,10 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
         case UserTypes.GET_USER_LINKEDIN_SUCCESS:
             return {
                 linkedin_url: action.payload
+            }
+        case UserTypes.DELETE_LINKEDIN_USER_SUCCESS:
+            return {
+                delete: true
             }
         case UserTypes.GET_USER_LINKEDIN_ERROR:
             return {
