@@ -14,9 +14,15 @@ const UserPage = () => {
     const error = useSelector((state: RootStore) => state.user.error)
     const loading = useSelector((state: RootStore) => state.common.loading);
     const dispatch = useDispatch()
-    const { state }: any = useLocation();
+    const { state }: any = useLocation(); // access state from useNavigate()
     const [user, setUser] = useState<any | null>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(state == undefined){
+            navigate('/users');
+        }
+    },[])
 
     useEffect(() => {
         // navigate back to the users page if there's no data found
@@ -93,13 +99,14 @@ const UserPage = () => {
         // not available
         if(arr === undefined || arr === null) return <div className="mt-3 justify-content-center">{" "}</div>
 
-        if(field === 'emails'){
+        if(field === 'emails' || field === 'phone_numbers' || field === 'mobile_numbers'){
             return (
                 <>
                     {
                        arr.map((_arr: any) => (
                            <>
                                 {
+                                    typeof _arr === 'string' ?  <div>{_arr}</div> :
                                     Object.entries(_arr).map(([key, val]: any) => {
                                         return <div><span className="text-secondary"> {capitalizeStr('k', key)} </span>: {val ? val : 'N/A'}</div>
                                     })
@@ -108,29 +115,6 @@ const UserPage = () => {
                            </>
                        ))
                     }
-                </>
-            )
-        }
-
-        // This field has some array of objects and single value in their arrays
-        if(field === 'phone_numbers' || field === 'mobile_numbers'){
-            return (
-                <>
-                    { 
-                        arr.map((_arr: any) => {
-                            {
-                                if(typeof _arr === 'string'){
-                                    return <div>{_arr}</div>
-                                }else{
-                                    Object.entries(_arr).map(([key, val]: any) => {
-                                        return <div> {capitalizeStr('k', key)} : {val ? val : 'N/A'}</div>
-                                    })
-                                }
-                              
-                            }
-                        })
-                    }
-                    <div className="pb-3"></div>
                 </>
             )
         }
