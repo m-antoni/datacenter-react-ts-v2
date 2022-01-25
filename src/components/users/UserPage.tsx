@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteUserByLinkedInUrl, getUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
+import { getUserByLinkedInUrl, deleteUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from '../_layouts/Spinner';
 import { capitalizeStr } from '../../utils/helpers';
-import { ToastQuestion, ToastSuccess, ToastWarning } from '../../redux/service/toast.service';
+import { ToastQuestion, ToastSuccess } from '../../redux/service/toast.service';
 
 const UserPageTest = () => {
 
@@ -18,12 +18,19 @@ const UserPageTest = () => {
     const navigate = useNavigate();
 
 
-    /** When page is refresh you state is persisited by useNavigate(), */
     useEffect(() => {
         let url: string = state.data.docs[0]['linkedin_url'];
-        console.log(url)
-        setUser(state.data.docs);
-    },[state])
+        /** This will prevent to duplicate fetching if data is already in reducer */
+        if(linkedin_user === undefined || linkedin_user === null){
+            dispatch(getUserByLinkedInUrl(url));
+        }
+    },[])
+
+
+    useEffect(() => {
+        // set user data if persisted
+        linkedin_user != undefined && setUser(linkedin_user.data.docs)
+    },[linkedin_user])
 
     
     /** Trigger when user is deleted */
