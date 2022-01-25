@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteUserByLinkedInUrl, getUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from '../_layouts/Spinner';
-import { capitalizeStr } from '../../utils/Common';
+import { capitalizeStr } from '../../utils/helpers';
 import { ToastQuestion, ToastSuccess, ToastWarning } from '../../redux/service/toast.service';
 
 const UserPageTest = () => {
@@ -96,7 +96,7 @@ const UserPageTest = () => {
                                 {
                                     typeof _arr === 'string' ?  <div>{_arr}</div> :
                                     Object.entries(_arr).map(([key, val]: any) => {
-                                        return <div><span className="text-secondary"> {capitalizeStr('k', key)} </span>: {val ? val : 'N/A'}</div>
+                                        return <div><span className="text-secondary"> {capitalizeStr('k', key)} </span>: { capitalizeStr('v', val) }</div>
                                     })
                                 }
                              <div className="pb-3"></div>
@@ -115,8 +115,8 @@ const UserPageTest = () => {
                         arr.map((_arr: any) => {
                                 return (
                                     <>
-                                        <div><span className="text-secondary">School:</span> { capitalizeStr('v', _arr['school']['name'])} </div>
-                                        <div><span className="text-secondary">Type:</span> { _arr['school']['type'] ? capitalizeStr('v', _arr['school']['type']) : 'N/A'} </div>
+                                        <div><span className="text-secondary">School:</span> { capitalizeStr('v', _arr['school']['name']) } </div>
+                                        <div><span className="text-secondary">Type:</span> { capitalizeStr('v', _arr['school']['type']) } </div>
                                         <div className="pb-3"></div>
                                     </>
                                 )

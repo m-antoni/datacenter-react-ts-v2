@@ -3,7 +3,7 @@ import { getUsers } from '../../redux/actions/users/user.actions';
 import Select from 'react-select';
 import ReactPaginate from 'react-paginate';
 import { Spinner } from '../_layouts/Spinner';
-import { capitalizeStr } from '../../utils/Common';
+import { capitalizeStr } from '../../utils/helpers';
 
 
 interface PageLimitOptionI {
