@@ -7,38 +7,26 @@ import { Spinner } from '../_layouts/Spinner';
 import { capitalizeStr } from '../../utils/Common';
 import { ToastQuestion, ToastSuccess, ToastWarning } from '../../redux/service/toast.service';
 
-const UserPage = () => {
+const UserPageTest = () => {
 
     const linkedin_user = useSelector((state: RootStore) => state.user.linkedin_url)
     const isDeleted = useSelector((state: RootStore) => state.user.delete);
-    const error = useSelector((state: RootStore) => state.user.error)
     const loading = useSelector((state: RootStore) => state.common.loading);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { state }: any = useLocation(); // access state from useNavigate()
     const [user, setUser] = useState<any | null>(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if(state == undefined){
-            navigate('/users');
-        }
-    },[])
 
+    /** When page is refresh you state is persisited by useNavigate(), */
     useEffect(() => {
-        // navigate back to the users page if there's no data found
-        error === true && navigate('/users');
-    },[error])
+        let url: string = state.data.docs[0]['linkedin_url'];
+        console.log(url)
+        setUser(state.data.docs);
+    },[state])
 
-    useEffect(() => {
-        // dispatch(getUserByLinkedInUrl('linkedin.com/in/nicholas-stauder-a83b2822')); // testing user
-        dispatch(getUserByLinkedInUrl(state));
-    }, [state])
-
-    useEffect(() => {
-        // if user data get success
-        linkedin_user != undefined && setUser(linkedin_user.data.docs);
-    },[linkedin_user])
-
+    
+    /** Trigger when user is deleted */
     useEffect(() => {
        if(isDeleted === true){
             navigate('/users');
@@ -46,19 +34,19 @@ const UserPage = () => {
        }
     },[isDeleted]);
 
-    // delete button
+    // onclick delete button
     const deleteButton = (linkedin_url: string) => {
         ToastQuestion('Are you sure you want to delete this user?', () => deleteUserByLinkedInUrlHandler(linkedin_url) )
     }
     
+    // Delete handler
     const deleteUserByLinkedInUrlHandler = (linkedin_url: string) => {
         dispatch(deleteUserByLinkedInUrl(linkedin_url))
-        
     }
 
     // console.log(user)
     const renderUserData = (type: string, userData: object) => {
-        console.log(userData);
+        // console.log(userData);
         return (
             <>
                 {
@@ -128,7 +116,7 @@ const UserPage = () => {
                                 return (
                                     <>
                                         <div><span className="text-secondary">School:</span> { capitalizeStr('v', _arr['school']['name'])} </div>
-                                        <div><span className="text-secondary">Type:</span> { capitalizeStr('v', _arr['school']['type'])} </div>
+                                        <div><span className="text-secondary">Type:</span> { _arr['school']['type'] ? capitalizeStr('v', _arr['school']['type']) : 'N/A'} </div>
                                         <div className="pb-3"></div>
                                     </>
                                 )
@@ -176,9 +164,8 @@ const UserPage = () => {
             )
         }
 
-
         if(field === 'profiles'){
-            console.log(arr)
+            // console.log(arr)
             return (
                 <>
                     { 
@@ -201,7 +188,7 @@ const UserPage = () => {
     return (    
         <>
             <main id="main" className="main">
-                <div className="d-flex justify-content-between pagetitle">
+                <div className="d-flex justify-content-between pagetitle mb-0">
                     {/* <h1>Users</h1> */}
                     <nav>
                         <ol className="breadcrumb">
@@ -211,7 +198,10 @@ const UserPage = () => {
                     </nav>
                     <div>
                         <ol className="breadcrumb">
-                           <button onClick={() => deleteButton(user[0]['linkedin_url'])} className="btn btn-danger btn-sm"><i className="bi bi-trash"></i> </button>
+                           {/* <button onClick={() => deleteButton(user[0]['linkedin_url'])} className="btn btn-danger btn-sm"><i className="bi bi-trash"></i> </button> */}
+                           <div className="delete-icon">
+                                <i onClick={() => deleteButton(user[0]['linkedin_url'])} className="bi bi-trash"></i>
+                           </div>
                         </ol>
                     </div>
                 </div>
@@ -279,13 +269,13 @@ const UserPage = () => {
                                             </ul>
                                             <div className="tab-content pt-2" id="borderedTabJustifiedContent">
                                                 <div className="tab-pane fade show active" id="bordered-justified-email" role="tabpanel" aria-labelledby="email-tab">
-                                                { user != null && renderUserDataV2("emails",user[0]['emails'])}
+                                                    { user != null && renderUserDataV2("emails",user[0]['emails'])}
                                                 </div>
                                                 <div className="tab-pane fade" id="bordered-justified-telephone" role="tabpanel" aria-labelledby="telephone-tab">
-                                                { user != null && renderUserDataV2("phone_numbers",user[0]['phone_numbers'])}
+                                                    { user != null && renderUserDataV2("phone_numbers",user[0]['phone_numbers'])}
                                                 </div>
                                                 <div className="tab-pane fade" id="bordered-justified-mobile" role="tabpanel" aria-labelledby="mobile-tab">
-                                                { user != null && renderUserDataV2("mobile_numbers",user[0]['mobile_numbers'])}
+                                                    { user != null && renderUserDataV2("mobile_numbers",user[0]['mobile_numbers'])}
                                                 </div>
                                             </div>
                                         </div>
@@ -309,13 +299,13 @@ const UserPage = () => {
                                             </ul>
                                             <div className="tab-content pt-2" id="borderedTabJustifiedContent">
                                                 <div className="tab-pane fade show active" id="bordered-justified-skills" role="tabpanel" aria-labelledby="skills-tab">
-                                                { user != null && renderUserDataV2("skills",user[0]['skills'])}
+                                                    { user != null && renderUserDataV2("skills",user[0]['skills'])}
                                                 </div>
                                                 <div className="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-                                                { user != null && renderUserDataV2("interests",user[0]['interests'])}
+                                                    { user != null && renderUserDataV2("interests",user[0]['interests'])}
                                                 </div>
                                                 <div className="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-                                                { user != null && renderUserDataV2("profiles",user[0]['profiles'])}
+                                                    { user != null && renderUserDataV2("profiles",user[0]['profiles'])}
                                                 </div>
                                             </div>
                                         </div>
@@ -331,4 +321,4 @@ const UserPage = () => {
 
 }
 
-export default UserPage;
+export default UserPageTest;

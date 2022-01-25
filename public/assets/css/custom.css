@@ -4,6 +4,15 @@
     min-width: 80px;
 }
 
+.delete-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.delete-icon:hover{
+    color: #e63946;
+}
+
 .linkedin-search{
     max-width: 400px;
 }
@@ -11,6 +20,10 @@
 .user-list-tr:hover {
     cursor: pointer;
     background: #f6f9ff !important;
+}
+
+.user-fullname {
+    min-width: 200px;
 }
 
 

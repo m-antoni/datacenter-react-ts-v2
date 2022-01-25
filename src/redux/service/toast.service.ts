@@ -58,11 +58,10 @@ export const ToastWarning = (message: string) =>
 }
 
 
-
 export const ToastQuestion = (message: string, callback: any) => {
     iziToast.question({
         timeout: 20000,
-        close: true,
+        close: false,
         overlay: true,
         id: 'question',
         zindex: 999,
@@ -74,13 +73,16 @@ export const ToastQuestion = (message: string, callback: any) => {
             ['<button><b>YES</b></button>', function (instance, toast) {
                 callback() // callback function to run if click YES
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            }, true],
+            }, false],
+            ['<button><b>NO</b></button>', function (instance, toast) {
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }, false],
         ],
         onClosing: function(instance, toast, closedBy){
-            console.info('Closing | closedBy: ' + closedBy);
+            // console.info('Closing | closedBy: ' + closedBy);
         },
         onClosed: function(instance, toast, closedBy){
-            console.info('Closed | closedBy: ' + closedBy);
+            // console.info('Closed | closedBy: ' + closedBy);
         }
     });
 }

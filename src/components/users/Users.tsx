@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const Users = () => {
 
     const user = useSelector((state: RootStore) => state.user.users)
+    const linkedin_user = useSelector((state: RootStore) => state.user.linkedin_url)
     const loading = useSelector((state: RootStore) => state.common.loading);
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -26,15 +27,20 @@ const Users = () => {
         }
     },[user])
 
+    useEffect(() => {
+        // if user data get success
+        linkedin_user != undefined && navigate('/users/page', { state: linkedin_user });
+    },[linkedin_user])
+
     // handle change page row click
-    const handleChangePage = (linkedin_url: string) => {
-        navigate('/users/page', { state: linkedin_url });
+    const handleChangePage = (linkedin_url: string ) => {
+        dispatch(getUserByLinkedInUrl(linkedin_url))
+        // navigate('/users/page', { state: linkedin_url });
     }
 
     // submit search url
     const submitSearchLinkedInUrl = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log(linkedInUrl)
         handleChangePage(linkedInUrl);
     }
 

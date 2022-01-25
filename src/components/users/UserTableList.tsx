@@ -37,7 +37,7 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearc
     const pageLimitOnChange = (selected: any) => {
         setPageLimit(selected);
         dispatch(getUsers(undefined, selected.value, undefined));
-        // setTableComfig({ ...tableConfig, limit: selected });
+        // setTableComfig({ ...tableConfig, limit: selected }); //  not finish
     }
 
     const handlePageClick = (data: any) => {
@@ -67,9 +67,9 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearc
                 <table className="table mb-4">
                     <thead>
                         <tr>
-                            <th scope="col">Full Name</th>
+                            <th scope="col user-fullname">Full Name</th>
                             <th scope="col">Job Title</th>
-                            <th scope="col">Job Company Name</th>
+                            <th scope="col">Company</th>
                             <th scope="col">Industry</th>
                             <th scope="col">LinkedIn URL</th>
                         </tr>
