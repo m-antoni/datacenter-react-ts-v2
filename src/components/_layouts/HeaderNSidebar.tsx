@@ -183,6 +183,12 @@ const HeaderNSidebar = () => {
                     </a>
                 </li>
                 <li className="nav-item">
+                    <a className="nav-link collapsed" href="/users/archive">
+                    <i className="bi bi-archive"></i>
+                    <span>Archive</span>
+                    </a>
+                </li>
+                <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i className="bi bi-gear"></i><span>Settings</span><i className="bi bi-chevron-down ms-auto"></i>
                     </a>
@@ -198,12 +204,6 @@ const HeaderNSidebar = () => {
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-error-404.html">
-                    <i className="bi bi-dash-circle"></i>
-                    <span>About</span>
-                    </a>
                 </li>
                 {/* <!-- End Blank Page Nav --> */}
             </ul>

@@ -17,7 +17,13 @@ export enum UserTypes {
     GET_USERS_SUCCESS = 'GET_USERS_SUCCESS',
     GET_USER_LINKEDIN_SUCCESS = 'GET_USER_LINKEDIN_SUCCESS',
     GET_USER_LINKEDIN_ERROR = 'GET_USER_LINKEDIN_ERROR',
-    DELETE_LINKEDIN_USER_SUCCESS = 'DELETE_LINKEDIN_USER_SUCCESS',
+    ARCHIVE_RESTORE_USER_SUCCESS = 'ARCHIVE_RESTORE_USER_SUCCESS',
+    GET_ARCHIVE_USER_SUCCESS = 'GET_ARCHIVE_USER_SUCCESS',
+}
+
+export enum ArchiveRestoreTypes{
+     ARCHIVE = 'archive',
+     RESTORE = 'restore'
 }
 
 export interface GetUsersSuccess {
@@ -34,9 +40,14 @@ export interface GetUserByLinkedInUrlError {
     type: UserTypes.GET_USER_LINKEDIN_ERROR
 }
 
-export interface DeleteLinkedInUser {
-    type: UserTypes.DELETE_LINKEDIN_USER_SUCCESS
+export interface ArchiveRestore {
+    type: UserTypes.ARCHIVE_RESTORE_USER_SUCCESS
 }
 
-export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | DeleteLinkedInUser;
+export interface GetArchiveUser {
+    type: UserTypes.GET_ARCHIVE_USER_SUCCESS;
+    payload: any
+}
+
+export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | ArchiveRestore | GetArchiveUser;
 /** USER END TYPES */

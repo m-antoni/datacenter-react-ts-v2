@@ -1,5 +1,5 @@
 import { Dispatch } from "redux"
-import { UserTypes, UserDispatchTypes, CommonDispatchTypes, CommonTypes } from "../../types";
+import { UserTypes, UserDispatchTypes, CommonDispatchTypes, CommonTypes, ArchiveRestoreTypes } from "../../types";
 import { UserService } from "./user.service";
 import { ToastDanger } from "../../service/toast.service";
 
@@ -52,15 +52,34 @@ export const getUserByLinkedInUrl = (linkedin_url: string) => async (dispatch: D
 }
 
 
-/** User Delete */
-export const deleteUserByLinkedInUrl = (linkedin_url: string) => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+/** User Archive */
+export const archiveOrRestoreUser = (linkedin_url: string, type: ArchiveRestoreTypes) => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
     try {
         
-        await UserService.deleteUserByLinkedInUrl({ linkedin_url: linkedin_url });
+        await UserService.archiveOrRestoreUser({ linkedin_url: linkedin_url, type: type });
         
-        dispatch({ type: UserTypes.DELETE_LINKEDIN_USER_SUCCESS })
+        dispatch({ type: UserTypes.ARCHIVE_RESTORE_USER_SUCCESS })
 
     } catch (err) {
         console.log(err);
+    }
+}
+
+
+/** Get Archive Users */
+export const getAllArchiveUsers = (page = 1, limit = 10, sort = "desc") => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+    try {
+        
+        dispatch({ type: CommonTypes.SET_LOADING, payload: true })
+
+        const result = await UserService.getAllArchiveUsers(page, limit, sort);
+
+        dispatch({ type: UserTypes.GET_ARCHIVE_USER_SUCCESS, payload: result.data });
+
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+
+    } catch (err) {
+        console.log(err)
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
     }
 }

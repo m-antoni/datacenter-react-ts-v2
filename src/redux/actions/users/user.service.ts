@@ -3,5 +3,6 @@ import http from "../../service/api.http";
 export const UserService = {
     getAllUsers: (page = 1, limit = 10, sort = 'desc') => http.get(`/user?page=${page}&limit=${limit}&sort=${sort}`),
     getUserByLinkedInUrl: (linkedin_url: string) => http.get(`/user?linkedin_url=${linkedin_url}`),
-    deleteUserByLinkedInUrl: (formParams: any) => http.post(`/user/delete`, formParams),
+    archiveOrRestoreUser: (formParams: any) => http.post(`/user/archive-or-restore`, formParams),
+    getAllArchiveUsers: (page = 1, limit = 10, sort = 'desc') => http.get(`/user/archive?page=${page}&limit=${limit}&sort=${sort}`),
 }

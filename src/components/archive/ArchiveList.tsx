@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { getUsers } from '../../redux/actions/users/user.actions';
 import Select from 'react-select';
 import ReactPaginate from 'react-paginate';
 import { Spinner } from '../_layouts/Spinner';
 import { capitalizeStr } from '../../utils/helpers';
+import { getAllArchiveUsers } from '../../redux/actions/users/user.actions';
 
 
 interface PageLimitOptionI {
@@ -23,27 +23,19 @@ interface TableConfigI {
     sort: 'desc'
 }
 
-const tableConfigValues: TableConfigI = {
-    page: 1,
-    limit: 10,
-    sort: 'desc'
-}
-
-const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearchLinkedInUrl, onChangeSearchLinkedInUrl }: any) => {
+const UserTableList = ({ archiveUsers, dispatch, loading, restoreButton }: any) => {
 
     const [pageLimit, setPageLimit] = useState<PageLimitOptionI>(pageLimitOptions[0]);
-    const [tableConfig, setTableComfig] = useState(tableConfigValues)
-
+ 
     const pageLimitOnChange = (selected: any) => {
         setPageLimit(selected);
-        dispatch(getUsers(undefined, selected.value, undefined));
-        // setTableComfig({ ...tableConfig, limit: selected }); //  not finish
+        dispatch(getAllArchiveUsers(undefined, selected.value, undefined));
     }
+    
 
     const handlePageClick = (data: any) => {
         let page = data.selected + 1;
-        dispatch(getUsers(page, undefined, undefined));
-        // setTableComfig({ ...tableConfig, page: page });
+        dispatch(getAllArchiveUsers(page, undefined, undefined));
     };
 
     return (
@@ -56,15 +48,11 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearc
                     className="user-pagelimit-select mt-4"
                 />
                 
-                <form onSubmit={submitSearchLinkedInUrl} className="input-group mb-3 linkedin-search mt-4">
-                    <span className="input-group-text" id="basic-addon3">https://</span>
-                    <input type="text" onChange={onChangeSearchLinkedInUrl} placeholder="Search LinkedIn URL" className="form-control" required/>
-                </form>
             </div>
                   
             {
                 loading ? <Spinner/> : 
-                <table className="table mb-4">
+                <table className="table mb-4 mt-2">
                     <thead>
                         <tr>
                             <th scope="col user-fullname">Full Name</th>
@@ -72,30 +60,31 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearc
                             <th scope="col">Company</th>
                             <th scope="col">Industry</th>
                             <th scope="col">LinkedIn URL</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            users != null && 
-                            users.docs.map((user: any, index: number) => {
+                            archiveUsers != null && 
+                            archiveUsers.docs.map((archive: any, index: number) => {
                                 return (
-                                    <tr onClick={() => handleChangePage(user.linkedin_url)} key={index} className="user-list-tr">
-                                        <td>{capitalizeStr('v',user.full_name)}</td>
-                                        <td>{capitalizeStr('v', user.job_title)}</td>
-                                        <td>{capitalizeStr('v', user.job_company_name)}</td>
-                                        <td>{capitalizeStr('v', user.industry)}</td>
-                                        <td>{user.linkedin_url}</td>
-                                    </tr> 
+                                    <tr key={index}>
+                                        <td>{capitalizeStr('v',archive.full_name)}</td>
+                                        <td>{capitalizeStr('v', archive.job_title) }</td>
+                                        <td>{capitalizeStr('v', archive.job_company_name)}</td>
+                                        <td>{capitalizeStr('v', archive.industry)}</td>
+                                        <td>{archive.linkedin_url}</td>
+                                        <td><i onClick={() => restoreButton(archive.linkedin_url)} className="bi bi-reply-fill restore-icon"></i></td>
+                                    </tr>
                                 )
                             })
-                            
                         }
                     </tbody>
                 </table>
             }
             
             {
-                users != null && 
+                archiveUsers != null && archiveUsers.totalDocs > 10 && 
                 <ReactPaginate
                     previousLabel="Previous"
                     nextLabel="Next"
@@ -108,7 +97,7 @@ const UserTableList = ({ users, dispatch, loading, handleChangePage, submitSearc
                     breakLabel="..."
                     breakClassName="page-item"
                     breakLinkClassName="page-link"
-                    pageCount={users.totalPages}
+                    pageCount={archiveUsers.totalPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}

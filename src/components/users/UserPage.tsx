@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserByLinkedInUrl, deleteUserByLinkedInUrl } from '../../redux/actions/users/user.actions';
+import { getUserByLinkedInUrl, archiveOrRestoreUser } from '../../redux/actions/users/user.actions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from '../_layouts/Spinner';
 import { capitalizeStr } from '../../utils/helpers';
 import { ToastQuestion, ToastSuccess } from '../../redux/service/toast.service';
+import { ArchiveRestoreTypes } from '../../redux/types';
 
 const UserPageTest = () => {
 
     const linkedin_user = useSelector((state: RootStore) => state.user.linkedin_url)
-    const isDeleted = useSelector((state: RootStore) => state.user.delete);
+    const is_archive_restore_status = useSelector((state: RootStore) => state.user.archive_restore_status);
     const loading = useSelector((state: RootStore) => state.common.loading);
     const dispatch = useDispatch();
     const { state }: any = useLocation(); // access state from useNavigate()
@@ -33,22 +34,22 @@ const UserPageTest = () => {
     },[linkedin_user])
 
     
-    /** Trigger when user is deleted */
+    /** Trigger when user is archive*/
     useEffect(() => {
-       if(isDeleted === true){
+       if(is_archive_restore_status === true){
             navigate('/users');
-            ToastSuccess('User has been deleted successfully.');
+            ToastSuccess('User is store in archives.');
        }
-    },[isDeleted]);
+    },[is_archive_restore_status]);
 
     // onclick delete button
-    const deleteButton = (linkedin_url: string) => {
-        ToastQuestion('Are you sure you want to delete this user?', () => deleteUserByLinkedInUrlHandler(linkedin_url) )
+    const archiveButton = (linkedin_url: string) => {
+        ToastQuestion('Do you want to remove this user?', () => archiveOrRestoreUserHandler(linkedin_url) )
     }
     
     // Delete handler
-    const deleteUserByLinkedInUrlHandler = (linkedin_url: string) => {
-        dispatch(deleteUserByLinkedInUrl(linkedin_url))
+    const archiveOrRestoreUserHandler = (linkedin_url: string) => {
+        dispatch(archiveOrRestoreUser(linkedin_url, ArchiveRestoreTypes.ARCHIVE))
     }
 
     // console.log(user)
@@ -205,9 +206,9 @@ const UserPageTest = () => {
                     </nav>
                     <div>
                         <ol className="breadcrumb">
-                           {/* <button onClick={() => deleteButton(user[0]['linkedin_url'])} className="btn btn-danger btn-sm"><i className="bi bi-trash"></i> </button> */}
+                           {/* <button onClick={() => archiveButton(user[0]['linkedin_url'])} className="btn btn-danger btn-sm"><i className="bi bi-trash"></i> </button> */}
                            <div className="delete-icon">
-                                <i onClick={() => deleteButton(user[0]['linkedin_url'])} className="bi bi-trash"></i>
+                                <i onClick={() => archiveButton(user[0]['linkedin_url'])} className="bi bi-trash"></i>
                            </div>
                         </ol>
                     </div>

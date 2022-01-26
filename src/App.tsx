@@ -4,6 +4,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import UserPage from './components/users/UserPage';
 import Users from './components/users/Users';
 import HeaderNSidebar from './components/_layouts/HeaderNSidebar';
+import Archives from './components/archive/Archives';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' element={<Dashboard/>} />
           <Route path='/users' element={<Users/>} />
           <Route path='/users/page' element={<UserPage/>} />
+          <Route path='/users/archive' element={<Archives/>} />
         </Routes>
       </BrowserRouter>
     </>
