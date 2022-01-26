@@ -4,13 +4,17 @@
     min-width: 80px;
 }
 
-.delete-icon {
+.delete-icon, .restore-icon {
     font-size: 1.5rem;
     cursor: pointer;
 }
 
 .delete-icon:hover{
     color: #e63946;
+}
+
+.restore-icon:hover{
+    color: #4154f1;
 }
 
 .linkedin-search{
