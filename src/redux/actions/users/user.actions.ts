@@ -83,3 +83,22 @@ export const getAllArchiveUsers = (page = 1, limit = 10, sort = "desc") => async
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
     }
 }
+
+
+/** Get Single Setting */
+export const getSingleSetting = (setting_name: string) => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+    try {
+        
+        dispatch({ type: CommonTypes.SET_LOADING, payload: true })
+
+        const result = await UserService.getSingleSetting(setting_name);
+
+        dispatch({ type: UserTypes.GET_SINGLE_SETTING_SUCCESS, payload: result.data.data });
+
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+
+    } catch (err) {
+        console.log(err)
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+    }
+}

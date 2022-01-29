@@ -59,3 +59,8 @@ export const capitalizeStr = (type: string, val: any): string => {
 
     return keyName;
 }
+
+
+export const getFileExtension = (filename : any): string => {
+  return filename.substring(filename.lastIndexOf('.') +1, filename.length) || filename;
+}

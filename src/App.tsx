@@ -5,7 +5,7 @@ import UserPage from './components/users/UserPage';
 import Users from './components/users/Users';
 import HeaderNSidebar from './components/_layouts/HeaderNSidebar';
 import Archives from './components/archive/Archives';
-import UserImport from './components/users/UserImport';
+import UserImport from './components/user_import/UserImport';
 
 function App() {
   return (

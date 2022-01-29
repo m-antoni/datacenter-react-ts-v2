@@ -5,7 +5,8 @@ interface InitialStateI {
     linkedin_url?: any
     archives?: any
     error?: boolean
-    archive_restore_status?: boolean
+    archive_restore_status?: boolean,
+    collection_keys?: any
 }
 
 const initialState: InitialStateI = {};
@@ -33,6 +34,10 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
         case UserTypes.GET_ARCHIVE_USER_SUCCESS:
             return {
                 archives: action.payload
+            }
+        case UserTypes.GET_SINGLE_SETTING_SUCCESS:
+            return {
+                collection_keys: action.payload
             }
         default:
             return state;

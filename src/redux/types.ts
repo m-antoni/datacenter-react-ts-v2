@@ -19,6 +19,7 @@ export enum UserTypes {
     GET_USER_LINKEDIN_ERROR = 'GET_USER_LINKEDIN_ERROR',
     ARCHIVE_RESTORE_USER_SUCCESS = 'ARCHIVE_RESTORE_USER_SUCCESS',
     GET_ARCHIVE_USER_SUCCESS = 'GET_ARCHIVE_USER_SUCCESS',
+    GET_SINGLE_SETTING_SUCCESS = 'GET_SINGLE_SETTING_SUCCESS',
 }
 
 export enum ArchiveRestoreTypes{
@@ -49,5 +50,10 @@ export interface GetArchiveUser {
     payload: any
 }
 
-export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | ArchiveRestore | GetArchiveUser;
+export interface GetSingleSettingSuccess {
+    type: UserTypes.GET_SINGLE_SETTING_SUCCESS;
+    payload: any
+}
+
+export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | ArchiveRestore | GetArchiveUser | GetSingleSettingSuccess;
 /** USER END TYPES */

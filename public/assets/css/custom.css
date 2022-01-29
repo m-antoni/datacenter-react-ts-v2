@@ -38,6 +38,10 @@
     cursor: pointer;
 }
 
+.upload-input{
+    max-width: 500px;
+}
+
 @media (min-width: 1200px){
     .logo {
         width: unset !important;
