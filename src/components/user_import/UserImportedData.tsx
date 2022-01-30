@@ -5,9 +5,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Select from 'react-select';
 
-
-const UserImportedData = ({ excelData, collectionKeys, onChangeSelect }: any) => {
-
+const UserImportedData = ({ collectionKeys, onChangeSelect, columnToField, getValue }: any) => {
 
     return (
         <>
@@ -18,22 +16,26 @@ const UserImportedData = ({ excelData, collectionKeys, onChangeSelect }: any) =>
             </div>
 
             {
-                Object.entries(excelData[0]).map(([column, val]: any) => {
+                columnToField.map((data :any, index: any) :any => {
                     return (
-                        <div className="row d-flex justify-content-center" key={column}>
+                        <div className="row d-flex justify-content-center" key={index}>
                             <Accordion className="col-4 mb-3">
-                                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id={column}>
-                                    <Typography>{column}</Typography>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id={index}>
+                                    <Typography>{data.column}</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Typography className="text-secondary">{val}</Typography>
+                                    <Typography className="text-secondary">{data.sample_data}</Typography>
                                 </AccordionDetails>
                             </Accordion>
-                            
                             <div className="col-1"></div>
-
                             <div className="col-4 mb-1">
-                                <Select onChange={e => onChangeSelect(e, column)} options={collectionKeys} isSearchable={true}/>
+                                <Select 
+                                    value={getValue(collectionKeys, data.set_field)}  
+                                    onChange={e => onChangeSelect(e, index)} 
+                                    options={collectionKeys} 
+                                    isSearchable
+                                    placeholder="Select fields here..."
+                                />
                             </div>
                         </div>
                     )

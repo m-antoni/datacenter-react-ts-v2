@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../store';
 import { getSingleSetting } from '../../redux/actions/users/user.actions';
 import { Spinner } from '../_layouts/Spinner';
+import UserImportedSummary from './UserImportSummary';
+import { ToastDanger } from '../../redux/service/toast.service';
 
 const UserImport = () => {
 
@@ -30,7 +32,7 @@ const UserImport = () => {
     useEffect(() => {
         if(collection_keys != undefined){
             let _arr: any = [];
-            collection_keys.keys.map((key: string) => _arr.push({ value: key, label: key}));
+            collection_keys.keys.map((key: string) => _arr.push({ value: key, label: key }));
             _arr.length > 0 && setCollectionKeys(_arr);
         }
     },[collection_keys])
@@ -43,22 +45,61 @@ const UserImport = () => {
     },[excelData])
 
 
-    const onChangeSelect = (selected: any, column: string): void => {
-        // console.log(selected, column)
-        // let pushArr = columnToField.concat();
-        columnToField.map((col: any) => {
-            if(col.column === column){
-                columnToField[column] = selected.value
-            }
-
-            return true;
-        });
-
-        setColumnToField([...columnToField, { column: column, field: selected.value }])
+    const onChangeSelect = (selected: any, index: any): void => {
+        let oldArray = [...columnToField];
+        oldArray[index]['set_field'] = selected.value;
+        setColumnToField(oldArray);
     }
 
 
-    console.log(columnToField)
+    const getValue = (opts: any, val: any) : any => {
+        return opts.filter((o: any)=> val.includes(o.value));
+    };
+
+  
+     // Improt excel convert to JSON
+     const readUploadFile = (e:any) => {
+        e.preventDefault();
+        if (e.target.files) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const event:any = e.target;
+                const data = event.result;
+                const workbook = xlsx.read(data, { type: "array" });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const json = xlsx.utils.sheet_to_json(worksheet);
+                // console.log(json);
+                setExcelData(json);
+                setColumnFieldValues(json[0]);
+            };
+            reader.readAsArrayBuffer(e.target.files[0]);
+        }
+    }
+
+
+    const setColumnFieldValues = (obj: any) => {
+        let updatedArr: any = [];
+        Object.entries(obj).map(([key, val]) => {
+            updatedArr.push({ column: key, sample_data: val, set_field: "" });
+        });
+        setColumnToField(updatedArr);
+    }
+
+
+    const stepValidate = (): boolean => {
+        
+        let arr = columnToField.map((data: any) => {
+            if(data.set_field !== ""){
+                return false;
+            }else{
+                return true;
+            }
+        })
+
+        return  arr.includes(true) ? true : false;
+    }
+
 
     const steps = [
         {
@@ -71,7 +112,7 @@ const UserImport = () => {
         },
         {
             title: 'Summary',
-            desc: 'Done'
+            desc: 'Your headers to field summary'
         }
     ];
 
@@ -93,8 +134,23 @@ const UserImport = () => {
             newSkipped = new Set(newSkipped.values());
             newSkipped.delete(activeStep);
         }
-  
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        
+        console.log(activeStep);
+        // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        
+        if(activeStep === 1){
+           let validate =  stepValidate();
+
+            console.log(validate);
+           if(validate === true){
+               ToastDanger("Please complete all selection fields.")
+           }else{
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+           }
+        }else{
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }     
+        
         setSkipped(newSkipped);
     };
   
@@ -124,29 +180,6 @@ const UserImport = () => {
       setActiveStep(0);
     };
   
-
-
-    // Improt excel convert to JSON
-    const readUploadFile = (e:any) => {
-        e.preventDefault();
-        if (e.target.files) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const event:any = e.target;
-                const data = event.result;
-                const workbook = xlsx.read(data, { type: "array" });
-                const sheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[sheetName];
-                const json = xlsx.utils.sheet_to_json(worksheet);
-                // console.log(json);
-                setExcelData(json);
-            };
-            reader.readAsArrayBuffer(e.target.files[0]);
-        }
-    }
-
-    // console.log(excelData)
-
 
     return (
         <>
@@ -197,8 +230,8 @@ const UserImport = () => {
                                                     activeStep === steps.length ? (
                                                         <>
                                                             <Typography sx={{ mt: 2, mb: 1 }}>
-                                                                <div className="d-flex justify-content-center">
-                                                                    <Button onClick={handleReset}>START AGAIN</Button>
+                                                                <div className="d-flex justify-content-center mt-5 pt-5">
+                                                                    <Button onClick={handleReset} variant="contained">START AGAIN</Button>
                                                                 </div>
                                                             </Typography>
                                                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -221,16 +254,22 @@ const UserImport = () => {
                                                                 )
                                                             }
 
-                                                            {
+                                                            { 
                                                                 activeStep === 1 && 
-                                                                    <UserImportedData 
-                                                                        excelData={excelData} 
-                                                                        collectionKeys={collectionKeys}
-                                                                        onChangeSelect={onChangeSelect}
-                                                                    />
+                                                                <UserImportedData 
+                                                                    columnToField={columnToField} 
+                                                                    collectionKeys={collectionKeys} 
+                                                                    onChangeSelect={onChangeSelect}
+                                                                    getValue={getValue}
+                                                                /> 
                                                             }
 
-
+                                                            { 
+                                                                activeStep === 2 && 
+                                                                <UserImportedSummary 
+                                                                    columnToField={columnToField}
+                                                                />
+                                                            }
 
                                                             {/* Step {activeStep + 1} */}
                                                     
@@ -238,17 +277,19 @@ const UserImport = () => {
                                                             
                                                             <div className="d-flex justify-content-between mt-5 px-4">
 
-                                                                <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>Back</Button>
-
                                                                 {
-                                                                    activeStep === 0 && <Button onClick={handleNext}>Next</Button>
-                                                                }
-                                                                {
-                                                                    activeStep === 1 && <Button onClick={handleNext}>Next 2</Button> 
+                                                                    (activeStep === 1 || activeStep === 2) && <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>Back</Button>
                                                                 }
 
                                                                 {
-                                                                    activeStep === 2 && <Button onClick={handleNext}>Next 3</Button> 
+                                                                    // activeStep === 0 && <Button onClick={handleNext}>Next</Button>
+                                                                }
+                                                                {
+                                                                    activeStep === 1 && <Button onClick={handleNext}>Next</Button> 
+                                                                }
+
+                                                                {
+                                                                    activeStep === 2 && <Button onClick={handleNext}>Finish</Button> 
                                                                 }
 
                                                                 {/* <Button onClick={handleNext}> { activeStep === steps.length - 1 ? 'Finish' : 'Next' }</Button> */}

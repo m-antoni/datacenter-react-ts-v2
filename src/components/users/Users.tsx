@@ -4,7 +4,9 @@ import { RootStore } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import UserTableList from './UserTableList';
 import { useNavigate } from 'react-router-dom';
-
+import Button from '@mui/material/Button';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const Users = () => {
 
@@ -63,8 +65,8 @@ const Users = () => {
                         </ol>
                     </nav>
                     <div>
-                        <span onClick={importPage} className="badge bg-success mr10 cr-p"><i className="bi bi-file-earmark-break"></i>Import</span>
-                        <span className="badge bg-primary cr-p"><i className="bi bi-file-earmark-arrow-down"></i> Export</span>
+                        <span onClick={importPage} className="mr10"><Button variant="contained" size="small" color="success" startIcon={<UploadFileIcon/>}>Import</Button></span>
+                        <span onClick={importPage} className="mr10"><Button variant="contained" size="small" startIcon={<FileDownloadIcon/>}>Export</Button></span>
                     </div>
                 </div>
                 <section className="section dashboard">
