@@ -65,8 +65,8 @@ const Users = () => {
                         </ol>
                     </nav>
                     <div>
-                        <span onClick={importPage} className="mr10"><Button variant="contained" size="small" color="success" startIcon={<UploadFileIcon/>}>Import</Button></span>
-                        <span onClick={importPage} className="mr10"><Button variant="contained" size="small" startIcon={<FileDownloadIcon/>}>Export</Button></span>
+                        <span className="mr10"><Button onClick={importPage} variant="contained" size="small" color="success" startIcon={<UploadFileIcon/>}>Import</Button></span>
+                        <span className="mr10"><Button variant="contained" size="small" startIcon={<FileDownloadIcon/>}>Export</Button></span>
                     </div>
                 </div>
                 <section className="section dashboard">
