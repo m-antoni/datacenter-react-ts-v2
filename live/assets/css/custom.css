@@ -30,6 +30,21 @@
     min-width: 200px;
 }
 
+.mr10{
+    margin-right: 10px;
+}
+
+.cr-p{
+    cursor: pointer;
+}
+
+.upload-input{
+    max-width: 500px;
+}
+
+.mnwd {
+    min-width: 200px !important;
+}
 
 @media (min-width: 1200px){
     .logo {
