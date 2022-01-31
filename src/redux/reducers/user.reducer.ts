@@ -6,7 +6,9 @@ interface InitialStateI {
     archives?: any
     error?: boolean
     archive_restore_status?: boolean,
-    collection_keys?: any
+    collection_keys?: any,
+    is_excel_save?: boolean,
+    excel_save_data?: any
 }
 
 const initialState: InitialStateI = {};
@@ -38,6 +40,15 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
         case UserTypes.GET_SINGLE_SETTING_SUCCESS:
             return {
                 collection_keys: action.payload
+            }
+        case UserTypes.INSERT_EXCEL_DATA_SUCCESS:
+            return {
+                is_excel_save: true,
+                excel_save_data: action.payload
+            }
+        case UserTypes.INSERT_EXCEL_DATA_ERROR:
+            return {
+                is_excel_save: false
             }
         default:
             return state;

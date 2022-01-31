@@ -4,9 +4,12 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Select from 'react-select';
+import { useEffect } from 'react';
 
 const UserImportedData = ({ collectionKeys, onChangeSelect, columnToField, getValue }: any) => {
 
+
+    /** Hard coded location country */
     return (
         <>
             <div className="row d-flex justify-content-center">
@@ -41,6 +44,21 @@ const UserImportedData = ({ collectionKeys, onChangeSelect, columnToField, getVa
                     )
                 })
             }
+
+            <div className="row d-flex justify-content-center">
+                <Accordion className="col-4 mb-3">
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content">
+                        <Typography>Location Country</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography className="text-secondary">united states</Typography>
+                    </AccordionDetails>
+                </Accordion>
+                <div className="col-1"></div>
+                <div className="col-4 mb-1">
+                    <Select value={{ value: "location_country", label: "location_country"}} isDisabled/>
+                </div>
+            </div>
         </>
     )
 }

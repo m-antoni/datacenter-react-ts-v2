@@ -20,6 +20,8 @@ export enum UserTypes {
     ARCHIVE_RESTORE_USER_SUCCESS = 'ARCHIVE_RESTORE_USER_SUCCESS',
     GET_ARCHIVE_USER_SUCCESS = 'GET_ARCHIVE_USER_SUCCESS',
     GET_SINGLE_SETTING_SUCCESS = 'GET_SINGLE_SETTING_SUCCESS',
+    INSERT_EXCEL_DATA_SUCCESS = 'INSERT_EXCEL_DATA_SUCCESS',
+    INSERT_EXCEL_DATA_ERROR = 'INSERT_EXCEL_DATA_ERROR',
 }
 
 export enum ArchiveRestoreTypes{
@@ -55,5 +57,20 @@ export interface GetSingleSettingSuccess {
     payload: any
 }
 
-export type UserDispatchTypes = GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | ArchiveRestore | GetArchiveUser | GetSingleSettingSuccess;
+export interface insertExcelDataSuccess {
+    type: UserTypes.INSERT_EXCEL_DATA_SUCCESS;
+    payload: any
+}
+
+export interface insertExcelDataError {
+    type: UserTypes.INSERT_EXCEL_DATA_ERROR;
+}
+
+
+export type UserDispatchTypes = 
+GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | 
+ArchiveRestore | GetArchiveUser | GetSingleSettingSuccess | 
+insertExcelDataSuccess | insertExcelDataError;
+
+
 /** USER END TYPES */

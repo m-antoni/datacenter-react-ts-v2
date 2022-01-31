@@ -102,3 +102,29 @@ export const getSingleSetting = (setting_name: string) => async (dispatch: Dispa
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
     }
 }
+
+
+/** Insert Excel Data */
+export const insertExcelData = (excel_data: [], columns_to_fields: any) => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+
+    try {
+        
+        dispatch({ type: CommonTypes.SET_LOADING, payload: true })
+
+        const postParams = {
+            excel_data,
+            columns_to_fields
+        }
+
+        const result = await UserService.insertExcelData(postParams);
+
+        dispatch({ type: UserTypes.INSERT_EXCEL_DATA_SUCCESS, payload: result.data });
+
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+
+    } catch (err) {
+        console.log(err)
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+        dispatch({ type: UserTypes.INSERT_EXCEL_DATA_ERROR });
+    }
+}

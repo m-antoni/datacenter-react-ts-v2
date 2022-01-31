@@ -10,15 +10,16 @@ import Typography from '@mui/material/Typography';
 import UserImportedData from './UserImportedData';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../store';
-import { getSingleSetting } from '../../redux/actions/users/user.actions';
+import { getSingleSetting, insertExcelData } from '../../redux/actions/users/user.actions';
 import { Spinner } from '../_layouts/Spinner';
 import UserImportedSummary from './UserImportSummary';
-import { ToastDanger } from '../../redux/service/toast.service';
+import { ToastDanger, ToastSuccess } from '../../redux/service/toast.service';
 
 const UserImport = () => {
 
     const dispatch = useDispatch();
     const collection_keys = useSelector((state: RootStore) => state.user.collection_keys);
+    const is_excel_save = useSelector((state: RootStore) => state.user.is_excel_save);
     const loading = useSelector((state: RootStore) => state.common.loading); 
 
     const [excelData, setExcelData] = useState<any>(null);
@@ -28,7 +29,19 @@ const UserImport = () => {
     useEffect(() => {
         dispatch(getSingleSetting('collection-keys'));
     },[])
+
+    useEffect(() => {
+        if(is_excel_save === true){
+            ToastSuccess("Excel/Csv data saved successfully.")
+        }
+
+        if(is_excel_save === false){
+            ToastDanger("Server Error, data cannot save.")
+        }
+    },[is_excel_save])
     
+    console.log(excelData);
+
     useEffect(() => {
         if(collection_keys != undefined){
             let _arr: any = [];
@@ -66,9 +79,10 @@ const UserImport = () => {
                 const event:any = e.target;
                 const data = event.result;
                 const workbook = xlsx.read(data, { type: "array" });
+
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
-                const json = xlsx.utils.sheet_to_json(worksheet);
+                const json = xlsx.utils.sheet_to_json(worksheet, { defval: "", blankrows: true});
                 // console.log(json);
                 setExcelData(json);
                 setColumnFieldValues(json[0]);
@@ -134,13 +148,11 @@ const UserImport = () => {
             newSkipped = new Set(newSkipped.values());
             newSkipped.delete(activeStep);
         }
-        
-        console.log(activeStep);
+    
         // setActiveStep((prevActiveStep) => prevActiveStep + 1);
         
         if(activeStep === 1){
            let validate =  stepValidate();
-
             console.log(validate);
            if(validate === true){
                ToastDanger("Please complete all selection fields.")
@@ -149,7 +161,11 @@ const UserImport = () => {
            }
         }else{
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        }     
+        }
+        
+        if(activeStep === 2){
+            dispatch(insertExcelData(excelData, columnToField));
+        }
         
         setSkipped(newSkipped);
     };

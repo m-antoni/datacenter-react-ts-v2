@@ -67,13 +67,14 @@ const UserPageTest = () => {
                                     <div className="pb-1"><span className="text-secondary">{capitalizeStr('k', key)}</span>: {capitalizeStr('k', val)}</div>
                                 )
                             }
-                        }
 
-                        if(key === 'linkedin_url')
-                        {
-                            return (
-                                <div className="pb-1"><span className="text-secondary">{capitalizeStr('k', key)}</span>: {val}</div>
-                            )
+                            if(key === 'linkedin_url')
+                            {
+                                return (
+                                    <div className="pb-1"><span className="text-secondary">{capitalizeStr('k', key)}</span>: {val}</div>
+                                )
+                            }
+                            
                         }
 
                         if(type === "location")

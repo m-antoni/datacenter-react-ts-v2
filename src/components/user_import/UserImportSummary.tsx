@@ -1,6 +1,8 @@
 
 const UserImportedSummary = ({ columnToField }: any) => {
 
+   
+
     return (
         <>
            <div className="row d-flex justify-content-center">
@@ -23,6 +25,10 @@ const UserImportedSummary = ({ columnToField }: any) => {
                                     )
                                 })
                             }
+                            <tr>
+                                <td className="mnwd">Location Country</td>
+                                <td>location_country</td>
+                            </tr> 
                         </tbody>
                     </table>
                </div>
