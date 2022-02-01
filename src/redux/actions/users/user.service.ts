@@ -7,4 +7,5 @@ export const UserService = {
     getAllArchiveUsers: (page = 1, limit = 10, sort = 'desc') => http.get(`/user/archive?page=${page}&limit=${limit}&sort=${sort}`),
     getSingleSetting: (setting_name: string) => http.get(`/settings?setting_name=${setting_name}`),
     insertExcelData: (postParams: any) => http.post(`/user/insert-excel`, postParams),
+    validateExcel: (postParams: any) => http.post(`/user/validate-excel`, postParams),
 }

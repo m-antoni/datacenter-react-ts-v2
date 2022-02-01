@@ -1,12 +1,22 @@
 
-const UserImportedSummary = ({ columnToField }: any) => {
+const UserImportedSummary = ({ columnToField, validate_excel }: any) => {
 
-   
+    console.log(validate_excel)
 
     return (
         <>
            <div className="row d-flex justify-content-center">
-               <div className="col-12 col-sm-6 col-lg-6">
+               <div className="col-12 col-sm-7 col-lg-7">
+
+                    {
+                        validate_excel && 
+                        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                            <b>Error! LinkedIn user(s) already in the database</b>
+                            <hr />
+                            { validate_excel.map((user:any) => <>{user.linkedin_url}<br/></>) }
+                        </div>   
+                    } 
+
                     <table className="table table table-striped mb-4">
                         <thead>
                             <tr>

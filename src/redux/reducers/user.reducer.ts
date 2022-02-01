@@ -8,7 +8,8 @@ interface InitialStateI {
     archive_restore_status?: boolean,
     collection_keys?: any,
     is_excel_save?: boolean,
-    excel_save_data?: any
+    excel_save_data?: any,
+    validate_excel?: any 
 }
 
 const initialState: InitialStateI = {};
@@ -48,6 +49,12 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
             }
         case UserTypes.INSERT_EXCEL_DATA_ERROR:
             return {
+                is_excel_save: false
+            }
+        case UserTypes.VALIDATE_EXCEL_DATA:
+            return {
+                ...state,
+                validate_excel: action.payload,
                 is_excel_save: false
             }
         default:

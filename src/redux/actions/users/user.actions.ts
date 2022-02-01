@@ -118,8 +118,15 @@ export const insertExcelData = (excel_data: [], columns_to_fields: any) => async
 
         const result = await UserService.insertExcelData(postParams);
 
-        dispatch({ type: UserTypes.INSERT_EXCEL_DATA_SUCCESS, payload: result.data });
+        console.log(result.data)
 
+        if(result.data.linkedin_urls.length > 0)
+        {
+            dispatch({ type: UserTypes.VALIDATE_EXCEL_DATA, payload: result.data.linkedin_urls }) // return linkedin_urls of exists users
+        }else{
+            dispatch({ type: UserTypes.INSERT_EXCEL_DATA_SUCCESS, payload: result.data.inserts }); // success inserts
+        }
+        
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
 
     } catch (err) {

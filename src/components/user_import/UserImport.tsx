@@ -20,6 +20,7 @@ const UserImport = () => {
     const dispatch = useDispatch();
     const collection_keys = useSelector((state: RootStore) => state.user.collection_keys);
     const is_excel_save = useSelector((state: RootStore) => state.user.is_excel_save);
+    const validate_excel = useSelector((state: RootStore) => state.user.validate_excel);
     const loading = useSelector((state: RootStore) => state.common.loading); 
 
     const [excelData, setExcelData] = useState<any>(null);
@@ -32,15 +33,15 @@ const UserImport = () => {
 
     useEffect(() => {
         if(is_excel_save === true){
-            ToastSuccess("Excel/Csv data saved successfully.")
+            ToastSuccess("Excel/CSV data saved successfully.")
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
 
-        if(is_excel_save === false){
+        if(is_excel_save === false && validate_excel === undefined){
             ToastDanger("Server Error, data cannot save.")
         }
     },[is_excel_save])
-    
-    console.log(excelData);
+
 
     useEffect(() => {
         if(collection_keys != undefined){
@@ -150,26 +151,36 @@ const UserImport = () => {
         }
     
         // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        
-        if(activeStep === 1){
-           let validate =  stepValidate();
-            console.log(validate);
-           if(validate === true){
-               ToastDanger("Please complete all selection fields.")
+        // ENTITY MAPPING
+        if(activeStep === 1) 
+        {
+            // validated all excel data
+           let validate = stepValidate();
+           if(validate == true)
+           {
+               ToastDanger("Please complete all selection fields.");
            }else{
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
            }
-        }else{
+        }
+        else if(activeStep === 2)
+        {
+            dispatch(insertExcelData(excelData, columnToField));
+        }
+        else
+        {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
         
-        if(activeStep === 2){
-            dispatch(insertExcelData(excelData, columnToField));
-        }
         
         setSkipped(newSkipped);
     };
-  
+
+    console.log(activeStep);
+
+
+
+
     const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -284,6 +295,7 @@ const UserImport = () => {
                                                                 activeStep === 2 && 
                                                                 <UserImportedSummary 
                                                                     columnToField={columnToField}
+                                                                    validate_excel={validate_excel}
                                                                 />
                                                             }
 
