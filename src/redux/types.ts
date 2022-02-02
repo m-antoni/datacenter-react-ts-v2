@@ -80,3 +80,38 @@ insertExcelDataSuccess | insertExcelDataError | validateExcelData;
 
 
 /** USER END TYPES */
+
+
+
+
+/** AUTH TYPES */
+
+export enum AuthTypes {
+    AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS',
+    AUTH_LOGIN_ERROR = 'AUTH_LOGIN_ERROR',
+    AUTH_DETAILS = 'AUTH_DETAILS',
+    AUTH_LOGOUT = 'AUTH_LOGOUT',
+}
+
+
+export interface AuthLoginSuccess {
+    type: AuthTypes.AUTH_LOGIN_SUCCESS,
+    payload: any
+}
+
+export interface AuthLoginError {
+    type: AuthTypes.AUTH_LOGIN_ERROR
+}
+
+export interface AuthDetails {
+    type: AuthTypes.AUTH_DETAILS,
+    payload: any
+}
+
+export interface AuthLogOut {
+    type: AuthTypes.AUTH_LOGOUT
+}
+
+export type AuthDispatchTypes = AuthLoginSuccess | AuthLoginError | AuthLogOut;
+
+/** AUTH END TYPES */

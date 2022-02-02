@@ -12,6 +12,8 @@ export const getUsers = (page = 1, limit = 10, sort = "desc") => async (dispatch
 
         const result = await UserService.getAllUsers(page, limit, sort);
 
+        console.log(result.data);
+
         dispatch({ type: UserTypes.GET_USERS_SUCCESS, payload: result.data });
 
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })

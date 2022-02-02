@@ -1,5 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authLogout } from "../../redux/actions/auth/auth.action";
+import { RootStore } from "../../store";
+import { getToken } from "../../utils/helpers";
 
 const HeaderNSidebar = () => {
+
+    // const token = getToken();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector((state: RootStore) => state.auth.user);
+    const token = useSelector((state: RootStore) => state.auth.token)
+
+    useEffect(() => {
+        if(token === null){
+            navigate("/login");
+        }
+    },[token])
+
+
+    if(!token) {
+        return null;
+    }
+
+    const authLogoutBtn = () => {
+        dispatch(authLogout());
+    }
+
+    
     return (
         <>
             {/* <!-- ======= Header ======= --> */}
@@ -149,9 +178,9 @@ const HeaderNSidebar = () => {
                             <hr className="dropdown-divider"/>
                         </li>
                         <li>
-                            <a className="dropdown-item d-flex align-items-center" href="#">
+                            <a onClick={authLogoutBtn} className="dropdown-item d-flex align-items-center" href="#">
                             <i className="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
+                            <span>Log Out</span>
                             </a>
                         </li>
                         </ul>
