@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../../utils/helpers";
 
 const API_ROOT = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1/datacenter';
 
@@ -8,16 +9,15 @@ const http = axios.create ({
   headers: {'Content-Type': 'application/json'},
 });
 
-// http.interceptors.request.use (
-//   function (config) {
-//     const token = getToken();
-//     if (token) config.headers.Authorization = `Bearer ${token}`;
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject (error);
-//   }
-// );
+http.interceptors.request.use (function (config: any) {
+    const token = getToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject (error);
+  }
+);
 
 // http.interceptors.response.use((response) => {
 //     return response;
