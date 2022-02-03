@@ -17,7 +17,6 @@ const PrivateRoute: React.FC<Props> = ({ component: Component }) :any => {
     }
 
     return <Navigate to="/login"/>
-
 }
 
 

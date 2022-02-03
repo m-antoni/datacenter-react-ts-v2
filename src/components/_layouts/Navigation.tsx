@@ -10,14 +10,12 @@ const HeaderNSidebar = () => {
     // const token = getToken();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state: RootStore) => state.auth.user);
-    const token = useSelector((state: RootStore) => state.auth.token)
-
-    useEffect(() => {
-        if(token === null){
-            navigate("/login");
-        }
-    },[token])
+    const token = getToken();
+    
+    // useEffect(() => {
+    //     console.log(is_logout)
+    //     is_logout === true && navigate("/login")
+    // },[is_logout])
 
 
     if(!token) {
@@ -28,7 +26,21 @@ const HeaderNSidebar = () => {
         dispatch(authLogout());
     }
 
-    
+    const toggleSidebar = () => {
+        // const body: any = document.getElementById("body");
+        // if(body.classList.contains("toggle-sidebar")){
+        //     // body.classList.remove("toggle-sidebar");
+        //     body.classList.add("toggle-sidebar");
+
+        //     console.log('yes')
+        // }else{
+        //     // body.classList.add("toggle-sidebar");
+        //     body.classList.remove("toggle-sidebar");
+        //     console.log('no')
+
+        // }
+    }
+
     return (
         <>
             {/* <!-- ======= Header ======= --> */}
@@ -38,7 +50,7 @@ const HeaderNSidebar = () => {
                 <img src="/assets/img/logo.png" alt=""/>
                 <span className="d-none d-lg-block">DataCenter</span>
                 </a>
-                <i className="bi bi-list toggle-sidebar-btn"></i>
+                <i onClick={toggleSidebar} id="toggle-sidebar-btn" className="bi bi-list toggle-sidebar-btn"></i>
             </div>
             {/* <!-- End Logo --> */}
             {/* <div className="search-bar">
@@ -178,8 +190,8 @@ const HeaderNSidebar = () => {
                             <hr className="dropdown-divider"/>
                         </li>
                         <li>
-                            <a onClick={authLogoutBtn} className="dropdown-item d-flex align-items-center" href="#">
-                            <i className="bi bi-box-arrow-right"></i>
+                            <a onClick={authLogoutBtn} className="dropdown-item d-flex align-items-center" href="/login">
+                                <i className="bi bi-box-arrow-right"></i>
                             <span>Log Out</span>
                             </a>
                         </li>
@@ -192,7 +204,6 @@ const HeaderNSidebar = () => {
             {/* <!-- End Icons Navigation --> */}
             </header>
             {/* <!-- End Header --> */}
-
 
             {/* <!-- ======= Sidebar ======= --> */}
 

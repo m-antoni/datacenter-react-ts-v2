@@ -46,6 +46,11 @@
     min-width: 200px !important;
 }
 
+
+.loginSpinner {
+    padding: 6rem;
+}
+
 @media (min-width: 1200px){
     .logo {
         width: unset !important;

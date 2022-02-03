@@ -10,16 +10,13 @@ export const authLogin = (username: string, password: string) => async (dispatch
         dispatch({ type: CommonTypes.SET_LOADING, payload: true })
 
         const result = await AuthService.authLogin({ username, password });
-        
-        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
-
+    
         dispatch({ type: AuthTypes.AUTH_LOGIN_SUCCESS, payload: result.data })
-
-        console.log(result.data);
-
+        
         setUserSession(result.data);
 
-
+        // dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+        
     } catch (err) {
         console.log(err);
         dispatch({ type: AuthTypes.AUTH_LOGIN_ERROR })
