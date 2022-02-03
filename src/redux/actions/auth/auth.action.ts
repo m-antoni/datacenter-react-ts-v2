@@ -2,6 +2,7 @@ import { AuthDispatchTypes, AuthTypes, CommonDispatchTypes, CommonTypes } from "
 import { AuthService } from "./auth.service";
 import { Dispatch } from "redux";
 import { removeUserSession, setUserSession } from "../../../utils/helpers";
+import { ToastDanger } from "../../service/toast.service";
 
 /** Auth Login */
 export const authLogin = (username: string, password: string) => async (dispatch: Dispatch<AuthDispatchTypes | CommonDispatchTypes>) => {
@@ -21,6 +22,7 @@ export const authLogin = (username: string, password: string) => async (dispatch
         console.log(err);
         dispatch({ type: AuthTypes.AUTH_LOGIN_ERROR })
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+        ToastDanger("Please enter correct username & password.")
     }
 }
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authLogin } from "../../redux/actions/auth/auth.action";
+import { ToastDanger } from "../../redux/service/toast.service";
 import { RootStore } from "../../store";
 import { getToken } from "../../utils/helpers";
 import { MiniSpinner, Spinner } from "../_layouts/Spinner";
@@ -19,8 +20,7 @@ const Login = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const isToken = useSelector((state: RootStore) => state.auth.token)
-    const loading = useSelector((state: RootStore) => state.common.loading)
-  
+    const loading = useSelector((state: RootStore) => state.common.loading);
 
     const [inputs, setInputs] = useState<LoginInputs>({ username: "", password: "" });
 
@@ -36,6 +36,7 @@ const Login = () => {
             window.location.href = "/"
         }
     },[isToken])
+
 
     const onSubmit = (e: any): void => {
         e.preventDefault();
