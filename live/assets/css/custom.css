@@ -1,3 +1,16 @@
+.bg-login {
+    background-image: -webkit-gradient(linear, left top, right top, from(#1FA2FF), to(#A6FFCB));
+    background-image: -webkit-linear-gradient(left, #1FA2FF, #A6FFCB);
+    background-image: -moz-linear-gradient(left, #1FA2FF, #A6FFCB);
+    background-image: -o-linear-gradient(left, #1FA2FF, #A6FFCB);
+    background-image: linear-gradient(to right, #1FA2FF, #A6FFCB);
+
+     /* background-image: -webkit-gradient(linear, left top, right top, from(#9f78ff), to(#32cafe));
+    background-image: -webkit-linear-gradient(left, #9f78ff, #32cafe);
+    background-image: -moz-linear-gradient(left, #9f78ff, #32cafe);
+    background-image: -o-linear-gradient(left, #9f78ff, #32cafe);
+    background-image: linear-gradient(to right, #9f78ff, #32cafe); */
+}
 
 .user-pagelimit-select{
     max-width: 100px;
@@ -56,6 +69,7 @@
     background-color: #0d6efd;
     border-color: #0d6efd;
 }
+
 
 @media (min-width: 1200px){
     .logo {
