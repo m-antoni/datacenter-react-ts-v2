@@ -9,7 +9,8 @@ interface InitialStateI {
     collection_keys?: any,
     is_excel_save?: boolean,
     excel_save_data?: any,
-    validate_excel?: any 
+    validate_excel?: any,
+    summary?: any
 }
 
 const initialState: InitialStateI = {};
@@ -56,6 +57,10 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
                 ...state,
                 validate_excel: action.payload,
                 is_excel_save: false
+            }
+        case UserTypes.GET_SUMMARY_SUCCESS:
+            return {
+                summary: action.payload
             }
         default:
             return state;

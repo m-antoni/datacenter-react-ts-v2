@@ -51,6 +51,10 @@
     padding: 6rem;
 }
 
+.card-icon-c{
+    color: #4154f1 !important;
+}
+
 @media (min-width: 1200px){
     .logo {
         width: unset !important;

@@ -8,4 +8,5 @@ export const UserService = {
     getSingleSetting: (setting_name: string) => http.get(`/settings?setting_name=${setting_name}`),
     insertExcelData: (postParams: any) => http.post(`/user/insert-excel`, postParams),
     validateExcel: (postParams: any) => http.post(`/user/validate-excel`, postParams),
+    getSummary: () => http.get(`/user/summary`),
 }

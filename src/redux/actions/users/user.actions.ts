@@ -137,3 +137,26 @@ export const insertExcelData = (excel_data: [], columns_to_fields: any) => async
         dispatch({ type: UserTypes.INSERT_EXCEL_DATA_ERROR });
     }
 }
+
+
+
+
+/** Get Summary */
+export const getSummary = () => async (dispatch: Dispatch<UserDispatchTypes | CommonDispatchTypes>) => {
+
+    try {
+        
+        dispatch({ type: CommonTypes.SET_LOADING, payload: true })
+
+        const result = await UserService.getSummary();
+
+        dispatch({ type: UserTypes.GET_SUMMARY_SUCCESS, payload: result.data });
+        
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+
+    } catch (err) {
+        console.log(err)
+        dispatch({ type: CommonTypes.SET_LOADING, payload: false })
+    }
+}
+

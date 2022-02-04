@@ -66,3 +66,16 @@ export const capitalizeStr = (type: string, val: any): string => {
 export const getFileExtension = (filename : any): string => {
   return filename.substring(filename.lastIndexOf('.') +1, filename.length) || filename;
 }
+
+
+
+export const numberFormat = (number: any, decimal = 2, comma = true) => {
+  if(comma){
+    return Number(parseFloat(number).toFixed(decimal)).toLocaleString('en', {
+        minimumFractionDigits: decimal
+    });
+  }
+  else{
+    return Number(parseFloat(number).toFixed(decimal));
+  }
+}

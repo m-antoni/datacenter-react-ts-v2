@@ -26,21 +26,6 @@ const HeaderNSidebar = () => {
         dispatch(authLogout());
     }
 
-    const toggleSidebar = () => {
-        // const body: any = document.getElementById("body");
-        // if(body.classList.contains("toggle-sidebar")){
-        //     // body.classList.remove("toggle-sidebar");
-        //     body.classList.add("toggle-sidebar");
-
-        //     console.log('yes')
-        // }else{
-        //     // body.classList.add("toggle-sidebar");
-        //     body.classList.remove("toggle-sidebar");
-        //     console.log('no')
-
-        // }
-    }
-
     return (
         <>
             {/* <!-- ======= Header ======= --> */}
@@ -50,7 +35,7 @@ const HeaderNSidebar = () => {
                 <img src="/assets/img/logo.png" alt=""/>
                 <span className="d-none d-lg-block">DataCenter</span>
                 </a>
-                <i onClick={toggleSidebar} id="toggle-sidebar-btn" className="bi bi-list toggle-sidebar-btn"></i>
+                <i id="toggle-sidebar-btn" className="bi bi-list toggle-sidebar-btn"></i>
             </div>
             {/* <!-- End Logo --> */}
             {/* <div className="search-bar">
@@ -62,11 +47,11 @@ const HeaderNSidebar = () => {
             {/* <!-- End Search Bar --> */}
             <nav className="header-nav ms-auto">
                 <ul className="d-flex align-items-center">
-                    <li className="nav-item d-block d-lg-none">
+                    {/* <li className="nav-item d-block d-lg-none">
                         <a className="nav-link nav-icon search-bar-toggle " href="#">
                         <i className="bi bi-search"></i>
                         </a>
-                    </li>
+                    </li> */}
                     {/* <!-- End Search Icon--> */}
                     <li className="nav-item dropdown">
                         {/* <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -151,18 +136,18 @@ const HeaderNSidebar = () => {
                     <li className="nav-item dropdown pe-3">
                         <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="/assets/img/profile-blank.jpg" alt="Profile" className="rounded-circle"/>
-                        <span className="d-none d-md-block dropdown-toggle ps-2">M. Antoni</span>
+                        <span className="d-none d-md-block dropdown-toggle ps-2">Admin  </span>
                         </a>
                         {/* <!-- End Profile Iamge Icon --> */}
                         <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li className="dropdown-header">
-                            <h6>Michael Antoni</h6>
-                            <span>Software Developer</span>
+                            <h6>Admin</h6>
+                            {/* <span>Software Developer</span> */}
                         </li>
                         <li>
                             <hr className="dropdown-divider"/>
                         </li>
-                        <li>
+                        {/* <li>
                             <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
                             <i className="bi bi-person"></i>
                             <span>My Profile</span>
@@ -185,7 +170,7 @@ const HeaderNSidebar = () => {
                             <i className="bi bi-question-circle"></i>
                             <span>Need Help?</span>
                             </a>
-                        </li>
+                        </li> */}
                         <li>
                             <hr className="dropdown-divider"/>
                         </li>
@@ -228,7 +213,7 @@ const HeaderNSidebar = () => {
                     <span>Archive</span>
                     </a>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i className="bi bi-gear"></i><span>Settings</span><i className="bi bi-chevron-down ms-auto"></i>
                     </a>
@@ -244,7 +229,7 @@ const HeaderNSidebar = () => {
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> */}
                 {/* <!-- End Blank Page Nav --> */}
             </ul>
             </aside>
