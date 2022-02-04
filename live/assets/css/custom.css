@@ -51,6 +51,12 @@
     padding: 6rem;
 }
 
+.btn-custom {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
 @media (min-width: 1200px){
     .logo {
         width: unset !important;
