@@ -45,9 +45,9 @@ const UserImport = () => {
 
     useEffect(() => {
         if(collection_keys != undefined){
-            let _arr: any = [];
-            collection_keys.keys.map((key: string) => _arr.push({ value: key, label: key }));
-            _arr.length > 0 && setCollectionKeys(_arr);
+            let key_arr: any = [];
+            collection_keys.keys.map((key: string) => key_arr.push({ value: key, label: key }));
+            key_arr.length > 0 && setCollectionKeys(key_arr);
         }
     },[collection_keys])
 
@@ -101,19 +101,6 @@ const UserImport = () => {
     }
 
 
-    // const stepValidate = (): boolean => {
-        
-    //     let arr = columnToField.map((data: any) => {
-    //         if(data.set_field !== ""){
-    //             return false;
-    //         }else{
-    //             return true;
-    //         }
-    //     })
-
-    //     return  arr.includes(true) ? true : false;
-    // }
-
 
     const steps = [
         {
@@ -149,19 +136,7 @@ const UserImport = () => {
             newSkipped.delete(activeStep);
         }
     
-        // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        // ENTITY MAPPING
-        // if(activeStep === 1) 
-        // {
-        //     // validated all excel data
-        //    let validate = stepValidate();
-        //    if(validate == true)
-        //    {
-        //        ToastDanger("Please complete all selection fields.");
-        //    }else{
-        //         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        //    }
-        // }
+
         if(activeStep === 2)
         {
             dispatch(insertExcelData(excelData, columnToField));
@@ -171,13 +146,10 @@ const UserImport = () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
         
-        
         setSkipped(newSkipped);
     };
 
     // console.log(activeStep);
-
-
 
 
     const handleBack = () => {
@@ -339,3 +311,32 @@ const UserImport = () => {
 
 
 export default UserImport;
+
+
+        // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // ENTITY MAPPING
+        // if(activeStep === 1) 
+        // {
+        //     // validated all excel data
+        //    let validate = stepValidate();
+        //    if(validate == true)
+        //    {
+        //        ToastDanger("Please complete all selection fields.");
+        //    }else{
+        //         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        //    }
+        // }
+
+// const stepValidate = (): boolean => {
+    
+//     let arr = columnToField.map((data: any) => {
+//         if(data.set_field !== ""){
+//             return false;
+//         }else{
+//             return true;
+//         }
+//     })
+
+//     return  arr.includes(true) ? true : false;
+// }
+
