@@ -17,8 +17,6 @@ const Dashboard = () => {
     },[])
     
 
-    console.log(summary)
-
     return (
         <>
             <main id="main" className="main">
@@ -31,10 +29,8 @@ const Dashboard = () => {
                         </ol>
                     </nav>
                 </div>
-                {/* End Page Title */}
                 <section className="section dashboard">
                     <div className="row">
-                        
                         {
                             loading ? <Spinner/> : 
                             <div className="col-lg-4 col-12">
@@ -59,8 +55,8 @@ const Dashboard = () => {
                                                 <i className="bi bi-people"></i>
                                             </div>
                                             {
-                                                summary && summary.map((s: any) =>(
-                                                    <div className="ps-3">
+                                                summary && summary.map((s: any, index: any) =>(
+                                                    <div className="ps-3" key={index}>
                                                         <h6>{numberFormat(s.total, 0)}</h6>
                                                         <span className="text-danger small pt-1 fw-bold"></span>
                                                         <span className="text-muted small pt-2 ps-1">{capitalizeStr("v",s.location_country)}</span>
@@ -72,11 +68,9 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         }
-   
                     </div>
                 </section>
             </main>
-            {/* End #main */}
         </>
     )
 }

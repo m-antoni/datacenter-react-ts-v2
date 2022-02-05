@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import UserImportedData from './UserImportedData';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../store';
-import { getSingleSetting, insertExcelData } from '../../redux/actions/users/user.actions';
+import { getSingleSetting, insertExcelData, clearUserState } from '../../redux/actions/users/user.actions';
 import { Spinner } from '../_layouts/Spinner';
 import UserImportedSummary from './UserImportSummary';
 import { ToastDanger, ToastSuccess } from '../../redux/service/toast.service';
@@ -71,7 +71,7 @@ const UserImport = () => {
     };
 
   
-     // Improt excel convert to JSON
+     // Import excel convert to JSON
      const readUploadFile = (e:any) => {
         e.preventDefault();
         if (e.target.files) {
@@ -92,7 +92,6 @@ const UserImport = () => {
         }
     }
 
-
     const setColumnFieldValues = (obj: any) => {
         let updatedArr: any = [];
         Object.entries(obj).map(([key, val]) => {
@@ -102,18 +101,18 @@ const UserImport = () => {
     }
 
 
-    const stepValidate = (): boolean => {
+    // const stepValidate = (): boolean => {
         
-        let arr = columnToField.map((data: any) => {
-            if(data.set_field !== ""){
-                return false;
-            }else{
-                return true;
-            }
-        })
+    //     let arr = columnToField.map((data: any) => {
+    //         if(data.set_field !== ""){
+    //             return false;
+    //         }else{
+    //             return true;
+    //         }
+    //     })
 
-        return  arr.includes(true) ? true : false;
-    }
+    //     return  arr.includes(true) ? true : false;
+    // }
 
 
     const steps = [
@@ -152,18 +151,18 @@ const UserImport = () => {
     
         // setActiveStep((prevActiveStep) => prevActiveStep + 1);
         // ENTITY MAPPING
-        if(activeStep === 1) 
-        {
-            // validated all excel data
-           let validate = stepValidate();
-           if(validate == true)
-           {
-               ToastDanger("Please complete all selection fields.");
-           }else{
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
-           }
-        }
-        else if(activeStep === 2)
+        // if(activeStep === 1) 
+        // {
+        //     // validated all excel data
+        //    let validate = stepValidate();
+        //    if(validate == true)
+        //    {
+        //        ToastDanger("Please complete all selection fields.");
+        //    }else{
+        //         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        //    }
+        // }
+        if(activeStep === 2)
         {
             dispatch(insertExcelData(excelData, columnToField));
         }
@@ -176,7 +175,7 @@ const UserImport = () => {
         setSkipped(newSkipped);
     };
 
-    console.log(activeStep);
+    // console.log(activeStep);
 
 
 
@@ -204,10 +203,10 @@ const UserImport = () => {
     };
   
     const handleReset = () => {
-      setActiveStep(0);
+        setActiveStep(0);
+        dispatch(clearUserState());
     };
   
-
     return (
         <>
             <main id="main" className="main">

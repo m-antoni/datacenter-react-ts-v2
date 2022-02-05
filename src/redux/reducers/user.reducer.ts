@@ -62,6 +62,10 @@ const userReducer = (state: any = initialState , action: UserDispatchTypes) : In
             return {
                 summary: action.payload
             }
+        case UserTypes.CLEAR_USER_STATE:
+            return {
+                
+            }
         default:
             return state;
     }

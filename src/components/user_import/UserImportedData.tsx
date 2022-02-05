@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 const UserImportedData = ({ collectionKeys, onChangeSelect, columnToField, getValue }: any) => {
 
 
-    /** Hard coded location country */
     return (
         <>
             <div className="row d-flex justify-content-center">
@@ -44,7 +43,7 @@ const UserImportedData = ({ collectionKeys, onChangeSelect, columnToField, getVa
                     )
                 })
             }
-
+            {/* Hard coded location country */}
             <div className="row d-flex justify-content-center">
                 <Accordion className="col-4 mb-3">
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content">

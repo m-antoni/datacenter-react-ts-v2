@@ -12,8 +12,6 @@ export const getUsers = (page = 1, limit = 10, sort = "desc") => async (dispatch
 
         const result = await UserService.getAllUsers(page, limit, sort);
 
-        console.log(result.data);
-
         dispatch({ type: UserTypes.GET_USERS_SUCCESS, payload: result.data });
 
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
@@ -122,11 +120,12 @@ export const insertExcelData = (excel_data: [], columns_to_fields: any) => async
 
         console.log(result.data)
 
-        if(result.data.linkedin_urls.length > 0)
-        {
-            dispatch({ type: UserTypes.VALIDATE_EXCEL_DATA, payload: result.data.linkedin_urls }) // return linkedin_urls of exists users
+        if(result.data.linkedin_urls.length > 0){
+            // return linkedin_urls of exists users
+            dispatch({ type: UserTypes.VALIDATE_EXCEL_DATA, payload: result.data.linkedin_urls }) 
         }else{
-            dispatch({ type: UserTypes.INSERT_EXCEL_DATA_SUCCESS, payload: result.data.inserts }); // success inserts
+            // success inserts
+            dispatch({ type: UserTypes.INSERT_EXCEL_DATA_SUCCESS, payload: result.data.inserts }); 
         }
         
         dispatch({ type: CommonTypes.SET_LOADING, payload: false })
@@ -160,3 +159,9 @@ export const getSummary = () => async (dispatch: Dispatch<UserDispatchTypes | Co
     }
 }
 
+
+
+/** Reset Import page states, exclude collection_keys for selection */
+export const clearUserState = () => async (dispatch: Dispatch<UserDispatchTypes>) => {
+    dispatch({ type: UserTypes.CLEAR_USER_STATE });
+}

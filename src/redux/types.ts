@@ -24,6 +24,7 @@ export enum UserTypes {
     INSERT_EXCEL_DATA_ERROR = 'INSERT_EXCEL_DATA_ERROR',
     VALIDATE_EXCEL_DATA = 'VALIDATE_EXCEL_DATA',
     GET_SUMMARY_SUCCESS = 'GET_SUMMARY_SUCCESS',
+    CLEAR_USER_STATE = 'CLEAR_USER_STATE',
 }
 
 export enum ArchiveRestoreTypes{
@@ -78,12 +79,16 @@ export interface getSummary {
     payload: any
 }
 
+export interface clearUserState {
+    type: UserTypes.CLEAR_USER_STATE;
+}
+
 
 export type UserDispatchTypes = 
 GetUsersSuccess | GetUserByLinkedInUrl | GetUserByLinkedInUrlError | 
 ArchiveRestore | GetArchiveUser | GetSingleSettingSuccess | 
 insertExcelDataSuccess | insertExcelDataError | validateExcelData | 
-getSummary;
+getSummary | clearUserState;
 
 
 /** USER END TYPES */
