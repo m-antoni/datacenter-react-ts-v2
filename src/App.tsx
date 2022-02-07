@@ -26,14 +26,6 @@ function App() {
           <Route path='/users/import' element={<PrivateRoute component={UserImport}/>} />
           <Route path='/users/archive' element={<PrivateRoute component={Archives}/>} />
           <Route path="*" element={<PageNotFound/>}/>
-          {/* Not Protected */}
-          {/* <Route path='/' element={<Dashboard/>} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/users' element={<Users/>} />
-          <Route path='/users/page' element={<UserPage/>} />
-          <Route path='/users/import' element={<UserImport/>} />
-          <Route path='/users/archive' element={<Archives/>} /> */}
-
         </Routes>
       </BrowserRouter>
     </>

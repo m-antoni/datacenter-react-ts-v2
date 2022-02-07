@@ -15,7 +15,6 @@ interface LoginInputs {
     password: string;
 }
 
-
 const Login = () => {
 
     const dispatch = useDispatch();
@@ -27,14 +26,11 @@ const Login = () => {
 
     useEffect(() => {
         const token = getToken()
-        token && navigate("/")
-
+        token != null && navigate("/")
         document.body.classList.add("bg-login")
-
     },[])
 
     useEffect(() => {
-        // token != null  && navigate('/');
         const token = getToken()
         if(token){
             window.location.href = "/"
