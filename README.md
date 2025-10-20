@@ -1,46 +1,103 @@
-# Getting Started with Create React App
+# Datacenter Project (MERN + TypeScript)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack data visualization dashboard built with **React (TypeScript)** and **Node.js (Express + TypeScript)**.  
+The client app fetches data from a **custom Node API**, which in turn retrieves data from a **third-party API**, processes it, and stores the results in **MongoDB**.
 
-## Available Scripts
+![screenshot](datacenter.png)
 
-In the project directory, you can run:
+## Repositories
 
-### `npm start`
+- Backend (API): https://github.com/m-antoni/datacenter-api-vr2
+- Frontend (React UI): https://github.com/m-antoni/datacenter-react-ts-v2
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Frontend**
 
-### `npm test`
+- React + TypeScript
+- Redux for state management
+- MUI-Datatables for interactive tables
+- Axios for HTTP requests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Backend**
 
-### `npm run build`
+- Node.js (Express) + TypeScript
+- MongoDB + Aggregation Framework
+- Joi for validation
+- JWT for authentication
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Architecture Overview
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. The **React client** fetches data from the **Node API**.
+2. The **Node API** makes external calls to a **third-party API**.
+3. Data from the third-party API is validated using **Joi**, transformed using **MongoDB Aggregation**, and saved into MongoDB.
+4. The client displays the results in a structured data table using **MUI-Datatables**.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## API Overview
 
-### `npm run eject`
+The Node API provides routes to:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Fetch data from the third-party API
+- Store data in MongoDB
+- Retrieve processed data for the dashboard
+- Handle JWT authentication
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Key Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Type-safe full stack using TypeScript
+- End-to-end data flow: external API → backend → MongoDB → frontend
+- Input validation via **Joi**
+- Secure authentication via **JWT**
+- Interactive, filterable data tables via **mui-datatables**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Environment Variables
 
-## Learn More
+### Client (.env)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+REACT_APP_API_URL=http://localhost:5000/api
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Server (.env)
+
+```
+NODE_ENV=development
+PORT=5000
+MONGO_PATH=mongodb+srv://cluster0.xxxxx.mongodb.net
+MONGO_USER=your_user
+MONGO_PASSWORD=your_password
+JWT_SECRET=your_secret_key
+```
+
+---
+
+## Installation & Setup
+
+### Clone the Repositories
+
+```bash
+# Client
+git clone https://github.com/m-antoni/datacenter-react-ts-v2
+cd datacenter-react-ts-v2
+npm install
+
+# API
+git clone https://github.com/m-antoni/datacenter-api-vr2
+cd datacenter-api-vr2
+npm install
+```
+
+### Run the Development Servers
+
+```bash
+# Start API
+npm run dev
+
+# Start Client
+npm start
+```
+
+### Author
+
+- **Michael Antoni**
+- **michaelantoni.tech@gmail.com**
