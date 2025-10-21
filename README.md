@@ -97,7 +97,8 @@ npm run dev
 npm start
 ```
 
-### Author
+## Author
 
-- **Michael Antoni**
-- **michaelantoni.tech@gmail.com**
+**Michael B. Antoni**  
+LinkedIn: [https://linkedin.com/in/m-antoni](https://linkedin.com/in/m-antoni)  
+Email: michaelantoni.tech@gmail.com
